@@ -1,5 +1,7 @@
 import pkg/prologue
 
+const jsFile* {.strdefine.} = "main.js"
+
 let
   env = loadPrologueEnv ".env"
 

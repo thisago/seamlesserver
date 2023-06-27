@@ -53,18 +53,19 @@ The SPA will change the pages without reloading and the state will be preserved,
 
 ## Getting started
 
-To run this server you'll need to compile the Javascript, to do that, just run:
+To run is extremely simple!
 
 ```bash
-$ nimble build_js_release # Compilation for production
-$ nimble build_js # Compilation for development
+$ nimble r
 ```
 
-And run the server
+The above command will compile the javascript, create `.env` if not exists,
+compile and run the server!
+
+But if you want to compile and run just the server, just run:
 
 ```bash
-$ nimble run # Build and run, for development
-$ nimble build_release # Build release version
+$ nimble run_server
 ```
 
 ## License

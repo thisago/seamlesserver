@@ -3,6 +3,8 @@
 ## Version alpha 0.0.3 (27/06/2023)
 
 - Removed debug middleware when not in debug mode
+- Added configurable JS filename
+- Improved and added more nimble tasks
 
 ## Version alpha 0.0.2 (27/06/2023)
 

@@ -39,5 +39,5 @@ when not defined js:
           rendered.vnode
           renderFooter()
         state.brData.genBridgedData
-        script(src = "/" & jsDir / "main.js")
+        script(src = "/" & jsDir / jsFile)
     result = $vnode
