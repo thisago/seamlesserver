@@ -1,5 +1,6 @@
 from renderer/routes/home import nil
 from renderer/routes/user/login import nil
+from renderer/routes/user/register import nil
 
 when not defined js:
   import pkg/prologue
@@ -8,8 +9,9 @@ when not defined js:
 
   const
     allRoutes* = [
-      pattern("/", home.render, HttpGet),
-      pattern("/user/login", login.render, HttpGet),
+      pattern(home.path, home.render, HttpGet),
+      pattern(login.path, login.render, HttpGet),
+      pattern(register.path, register.render, HttpGet),
     ]
     defaultRoutes* = {
       Http404: notFound.render
@@ -17,6 +19,7 @@ when not defined js:
 else:
   const
     allRoutes* = {
-      "/": home.renderHtml,
-      "/user/login": login.renderHtml
+      home.path: home.renderHtml,
+      login.path: login.renderHtml,
+      register.path: register.renderHtml,
     }

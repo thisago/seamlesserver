@@ -1,9 +1,10 @@
 include pkg/karax/prelude
 
-import ../../state
 import ../../base
 
-proc renderHtml*(state = newState()): Rendered =
+const path* = "/user/login"
+
+proc renderHtml*(state: State): Rendered =
   ## Renders the HTML for homepage
   new result
   result.title = "Login"
@@ -17,4 +18,4 @@ when not defined js:
   
   proc render*(ctx: Context) {.async.} =
     ## Server side homepage renderer
-    resp renderHtml().inBaseHtml
+    resp ssr renderHtml

@@ -1,99 +1,43 @@
-from std/strformat import fmt
-
-when defined js:
-  import std/dom
-
 include pkg/karax/prelude
 
-import base/header
-export header
+import base/[
+  header,
+  footer,
+  errors,
+  bridgedData,
+  rendered,
+  state
+]
+export header, footer, errors, rendered, state
 
-import base/footer
-export footer
-
-type
-  Rendered* = ref object
-    vnode*: VNode
-    title*: string
-    errors*: seq[string]
-  BridgedData* = ref object
-    appName*: string
-
-const brDataDomJsonId = kstring "bridgedData"
-
-using
-  rendered: Rendered
-
-proc addError*(rendered; msg: string) =
-  ## Add new error
-  rendered.errors.add msg
-
-proc renderErrors*(rendered): VNode =
-  ## Renders all erros into a `div`
-  buildHtml(tdiv(class = "errors")):
-    for error in rendered.errors:
-      tdiv(class = "error"):
-        text error
-
-proc dynamicLink*(href = ""; title = ""): VNode =
-  ## Creates a default HTML link in backend and in frontend it just pushes the
-  ## state to history
-  buildHtml(a(href = href, title = title)):
-    when defined js:
-      proc onclick(ev: Event; n: VNode) =
-        preventDefault ev
-        window.history.pushState("", "", href)
-
-func genTitle*(rendered; appName: string): string =
-  ## Gets the rendered page title
-  fmt"{rendered.title} - {appName}"
+import base/karaxNodes/dynamicLink
+export dynamicLink
 
 when not defined js:
   from std/os import `/`
-  from std/json import `$`, `%*`, `%`
 
   import ../config
 
-  func genBridgedData(appName: string): VNode =
-    ## Generates the data that'll be sent to Javascript backend
-    let node = $ %*{
-      "appName": appName
-    }
-    buildHtml(script(id = brDataDomJsonId, `type` = "application/json")):
-      verbatim node
-  proc inbaseHtml*(rendered): string =
-    ## Creates the full HTML page with rendered page
+  type Render = proc(state: State): Rendered
+
+  proc ssr*(render: Render): string =
+    ## Server side rendering of Karax model
+    let state = newState()
     withConf:
+      let rendered = render state
       let
         appName = appName
         jsDir = jsDir
     let vnode = buildHtml(html):
       head:
         title: text rendered.genTitle appName
-        meta(name="viewport", content="width=device-width, -scale=1.0")
+        meta(name = "viewport", content = "width=device-width, -scale=1.0")
       body:
         tdiv(id = "ROOT"):
           renderHeader()
-          rendered.renderErrors
+          state.renderErrors
           rendered.vnode
           renderFooter()
-        genBridgedData(
-          appName = appName
-        )
+        state.brData.genBridgedData
         script(src = "/" & jsDir / "main.js")
     result = $vnode
-else:
-  from std/json import parseJson, to
-
-  proc parseBridgedData*(rendered): BridgedData =
-    ## Parses the BridgedData sent by server in a script tag
-    new result
-    try:
-      result = document.
-        getElementById(brDataDomJsonId).
-        innerText.
-        `$`.
-        parseJson.
-        to BridgedData
-    except:
-      rendered.addError getCurrentExceptionMsg()

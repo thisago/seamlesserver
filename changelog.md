@@ -8,6 +8,9 @@
 - Removed useless extra tdiv at frontend rendering
 - Added header and footer
 - Added blank register page
+- Fixed BridgedData behavior, now it's inside of State object
+- Moved the BridgedData, Errors, Rendered and State to their own module
+- Server side renderer now receives the renderer function, to run it with a blank State.
 
 ## Version alpha 0.0.1 (26/06/2023)
 
