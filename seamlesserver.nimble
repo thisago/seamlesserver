@@ -21,7 +21,7 @@ requires "hmac" # HMAC-SHA1 and HMAC-MD5 hashing in Nim
 requires "util" # Small utilities that isn't large enough to have a individual modules
 
 # Backend and frontend
-requires "karax" # Karax. Single page applications for Nim.
+requires "https://github.com/thisago/karax" # Karax. Single page applications for Nim.
 
 # Tasks
 

@@ -4,3 +4,8 @@
 
 - Added user DB model
 - Added auth hashing
+- Added server rendering
+- Added homepage and 404 renderer
+- Added logging middleware
+- Added env config
+- Added session middleware
