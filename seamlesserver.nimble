@@ -13,9 +13,10 @@ binDir = "build"
 requires "nim >= 1.9.5"
 
 # backend
+requires "checksums" # Hash algorithms in Nim
+
 requires "prologue" # Powerful and flexible web framework written in Nim
 requires "norm" # A Nim ORM for SQLite and Postgres
-requires "bcrypt" # This is a Nimrod wrapper for the bcrypt C functions.
 requires "hmac" # HMAC-SHA1 and HMAC-MD5 hashing in Nim
 
 requires "util" # Small utilities that isn't large enough to have a individual modules

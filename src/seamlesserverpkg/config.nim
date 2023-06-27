@@ -3,6 +3,10 @@ import pkg/prologue
 let
   env = loadPrologueEnv ".env"
 
+  dbHost* = env.getOrDefault("dbHost", ":memory:")
+  dbUser* = env.getOrDefault("dbUser", "")
+  dbPass* = env.getOrDefault("dbPass", "")
+
   host* = env.getOrDefault("host", "localhost")
   port* = env.getOrDefault("port", 8080)
   appName* = env.getOrDefault("appName", "seamlesserver")

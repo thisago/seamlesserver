@@ -1,9 +1,9 @@
-import pkg/norm[
+import pkg/norm/[
   model,
   pragmas
 ]
 
-from seamlesserverpkg/auth import genSalt, hashPassword
+from ../../auth import makeSalt, makePassword
 
 type
   User* = ref object of Model
@@ -16,8 +16,8 @@ type
 
   UserKind* = enum
     ukGhost,
-    urUser,
-    urAdmin
+    ukUser,
+    ukAdmin
 
 using
   user: User # Immutable user
@@ -25,19 +25,24 @@ using
 
 func kind*(user): UserKind =
   ## Get user kind
-  UserRank(user.internal_kind)
+  UserKind(user.internal_kind)
 func `kind=`(muser; rank: UserKind) =
   # Set user kind
   muser.internal_kind = ord rank
 
 proc newUser*(
   username, email, password: string;
-  rank = ukGhost;
+  kind = ukGhost
 ): User =
+  ## Creates new user
   new result
   result.username = username
   result.email = email
-  result.rank = rank
+  result.kind = kind
 
-  result.salt = genSalt()
+  result.salt = makeSalt()
   result.password = makePassword(password, result.salt)
+
+proc newUser*: User =
+  ## Creates new blank user
+  newUser("", "", "")

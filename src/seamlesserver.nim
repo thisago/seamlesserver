@@ -4,12 +4,19 @@ import pkg/prologue
 import pkg/prologue/middlewares/utils
 import pkg/prologue/middlewares/staticFile
 import pkg/prologue/middlewares/signedCookieSession
+
 import seamlesserverpkg/[
   config,
   routes,
+  db
 ]
+import seamlesserverpkg/db/setup
 
 proc main =
+  inDb:
+    dbConn = open(dbHost, dbUser, dbPass, "")
+    setup dbConn
+
   proc setLoggingLevel(settings: Settings; errorLog, rollingLog: string): auto =
     result = proc =
       addHandler newFileLogger(errorLog, levelThreshold = lvlError)

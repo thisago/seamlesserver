@@ -11,3 +11,5 @@
 - Added session middleware
 - Added base HTML
 - Added frontend routing
+- Added SQLite database
+- Updated password hashing
