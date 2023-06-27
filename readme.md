@@ -32,13 +32,18 @@ You can pre-render SPA pages in the server side
 
 ### Bridged data
 
-The server can send a JSON to frontend seamless
+The server can send a JSON to frontend seamless.
+
+The server renders a HTML script tag with a JSON on it and the
+frontend reads it and deserialize to a [`BridgedData`](bridgedDataDef)
 
 ## How it Works
 
 ### Rendering
 
-The renderer receives a reference to a [`State`](src/seamlesserverpkg/renderer/base/state.nim#L4), it contains a instance of [`BridgedData`](src/seamlesserverpkg/renderer/base/bridgedData.nim#L7) and a list of errors (like NodeJS flash messages). It returns an [`Rendered`](src/seamlesserverpkg/renderer/base/rendered.nim#L6), an object that contains the rendered `VNode` and the page title.
+The HTML rendering models are defined at [seamlesserverpkg/renderer/routes](src/seamlesserverpkg/renderer/routes), everything is reused, even states objects are shared!
+
+The renderer receives a reference to a [`State`](stateDef), it contains a instance of [`BridgedData`](bridgedDataDef) and a list of errors (like NodeJS flash messages). It returns an [`Rendered`](renderedDef), an object that contains the rendered `VNode` and the page title.
 
 The server renders the page with a blank state, since it's on server side.
 
@@ -53,4 +58,7 @@ This template is free and open source software licensed over MIT license.
 <!-- Refs -->
 
 [nimlang]: https://nim-lang.org "Nim Language official website"
-[Karax]: https://github.com/karaxnim/karax
+[karax]: https://github.com/karaxnim/karax
+[bridgedDataDef]: ./src/seamlesserverpkg/renderer/base/bridgedData.nim#L7
+[stateDef]: ./src/seamlesserverpkg/renderer/base/state.nim#L4
+[renderedDef]: ./src/seamlesserverpkg/renderer/base/rendered.nim#L6
