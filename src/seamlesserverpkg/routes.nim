@@ -1,9 +1,10 @@
-from renderer/routes/default/notFound import nil
 from renderer/routes/home import nil
 from renderer/routes/user/login import nil
 
 when not defined js:
   import pkg/prologue
+
+  from renderer/routes/default/notFound import nil
 
   const
     allRoutes* = [

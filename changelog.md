@@ -3,6 +3,8 @@
 ## Version alpha 0.0.2 (27/06/2023)
 
 - Added SPA routing without reloading
+- Added "flash" errors
+- Added BridgedData, data which is provided by backend, directly to frontend
 
 ## Version alpha 0.0.1 (26/06/2023)
 

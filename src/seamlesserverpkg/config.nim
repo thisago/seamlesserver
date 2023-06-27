@@ -24,7 +24,6 @@ let
   rollingLog* = env.getOrDefault("rollingLog", "rolling.log")
 
 template withConf*(body: untyped) =
-  ## Dirt trick to bypass gcsafe check, if I use locks, then echo doesn't works
+  ## Dirt trick to bypass gcsafe check
   {.gcsafe.}:
-    # withLock confLock:
     body

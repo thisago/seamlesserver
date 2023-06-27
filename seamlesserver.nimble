@@ -26,8 +26,16 @@ requires "https://github.com/thisago/karax" # Karax. Single page applications fo
 
 # Tasks
 
+proc minify =
+  exec "uglifyjs -o js/main.js js/main.js"
+
 task buildJs, "Compile Javascript":
   exec "nim js -o:js/main.js src/frontend"
+  minify()
+
+task buildJsRelease, "Compile Javascript in danger mode":
+  exec "nim js -d:danger -o:js/main.js src/frontend"
+  minify()
 
 task genDocs, "Generate documentation":
   exec "rm -r docs; nim doc -d:usestd --git.commit:master --git.url:https://git.ozzuu.com/thisago/seamlesserver --project -d:ssl --out:docs ./src/seamlesserver.nim"
