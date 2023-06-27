@@ -17,9 +17,7 @@ requires "checksums" # Hash algorithms in Nim
 
 requires "prologue" # Powerful and flexible web framework written in Nim
 requires "norm" # A Nim ORM for SQLite and Postgres
-requires "hmac" # HMAC-SHA1 and HMAC-MD5 hashing in Nim
-
-requires "util" # Small utilities that isn't large enough to have a individual modules
+# requires "hmac" # HMAC-SHA1 and HMAC-MD5 hashing in Nim
 
 # Backend and frontend
 requires "https://github.com/thisago/karax" # Karax. Single page applications for Nim.
