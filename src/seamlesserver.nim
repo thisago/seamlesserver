@@ -52,7 +52,7 @@ proc main =
     staticFileMiddleware(jsDir)
   ]
 
-  app.addRoute(allRoutes, "/")
+  app.addRoute allRoutes
   for (code, renderer) in defaultRoutes:
     app.registerErrorHandler(code, renderer)
 

@@ -1,6 +1,10 @@
 # Changelog
 
-## Version 0.0.1 (27/06/2023)
+## Version alpha 0.0.2 (27/06/2023)
+
+- Added SPA routing without reloading
+
+## Version alpha 0.0.1 (26/06/2023)
 
 - Added user DB model
 - Added auth hashing
