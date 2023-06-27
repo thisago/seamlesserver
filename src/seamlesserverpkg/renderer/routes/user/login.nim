@@ -27,7 +27,12 @@ proc renderHtml*(state: State): Rendered =
 
 when not defined js:
   import pkg/prologue
+
+  import ../../utils
   
   proc render*(ctx: Context) {.async.} =
     ## Server side homepage renderer
-    resp ssr renderHtml
+    let user = ctx.loggedUser
+    if user.isNil:
+      discard redirect "/"
+    resp ctx.ssr renderHtml

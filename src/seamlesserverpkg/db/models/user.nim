@@ -46,3 +46,17 @@ proc newUser*(
 proc newUser*: User =
   ## Creates new blank user
   newUser("", "", "")
+  
+proc get*(_: type User; email = ""; username = ""): User =
+  ## Get the user by email or username
+  var
+    keys: seq[string]
+    values: seq[string]
+  if email.len > 0:
+    keys.add "email"
+    values.add email
+  if username.len > 0:
+    keys.add "username"
+    values.add username
+  if keys.len > 0:
+    result = User.getFromDb(keys, values)

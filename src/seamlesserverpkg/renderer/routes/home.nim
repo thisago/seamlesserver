@@ -1,3 +1,7 @@
+when not defined js:
+  import pkg/prologue
+  import ../utils
+
 include pkg/karax/prelude
 
 import ../base
@@ -10,15 +14,13 @@ proc renderHtml*(state: State): Rendered =
   result.title = "Home"
   result.vnode = buildHtml(main):
     h1: text "homepage"
-    dynamicLink(href = "/user/login"):
-      text "Login"
-    br()
-    dynamicLink(href = "/user/register"):
-      text "Register"
-
+    when not defined js:
+      p:
+        text if state.ctx.isLogged: "logged user" else: "not logged"
+    
 when not defined js:
   import pkg/prologue
 
   proc render*(ctx: Context) {.async.} =
     ## Server side homepage renderer
-    resp ssr renderHtml
+    resp ctx.ssr renderHtml

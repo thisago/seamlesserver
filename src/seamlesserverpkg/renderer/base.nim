@@ -16,13 +16,15 @@ export dynamicLink
 when not defined js:
   from std/os import `/`
 
+  import pkg/prologue except appName
+
   import ../config
 
   type Render = proc(state: State): Rendered
 
-  proc ssr*(render: Render): string =
+  proc ssr*(ctx: Context; render: Render): string =
     ## Server side rendering of Karax model
-    let state = newState()
+    let state = ctx.newState
     withConf:
       let rendered = render state
       let

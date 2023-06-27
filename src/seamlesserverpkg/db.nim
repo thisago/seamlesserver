@@ -13,3 +13,26 @@ template inDb*(body: untyped) =
   {.gcsafe.}:
     withLock dbLock:
       body
+
+from std/strutils import join
+from std/strformat import fmt
+
+proc getFromDb*[T](
+  table: typedesc[T];
+  keys: openArray[string];
+  values: varargs[string],
+  operator = "and",
+): T =
+  let tableName = astToStr table
+  var query: seq[string]
+  for key in keys:
+    query.add tableName & "." & key & " = ?"
+  result = new table
+  var vals: seq[DbValue]
+  for val in values:
+    vals.add dbValue val
+  inDb: dbConn.select(
+    result,
+    query.join fmt" {operator} ",
+    vals
+  )

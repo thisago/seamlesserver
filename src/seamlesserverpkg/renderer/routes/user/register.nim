@@ -4,8 +4,8 @@ import ../../base
 
 const path* = "/user/register"
 
-proc renderHtml*(state: State): Rendered =
-  ## Renders the HTML for homepage
+proc renderHtml*(state: State): Rendered {.gcsafe.} =
+  ## Renders the HTML for user register page
   new result
   result.title = "Register"
   result.vnode = buildHtml(main):
@@ -18,4 +18,4 @@ when not defined js:
 
   proc render*(ctx: Context) {.async.} =
     ## Server side homepage renderer
-    resp ssr renderHtml
+    resp ctx.ssr renderHtml

@@ -19,7 +19,7 @@ when not defined js:
 else:
   const
     allRoutes* = {
+      register.path: register.renderHtml,
       home.path: home.renderHtml,
       login.path: login.renderHtml,
-      register.path: register.renderHtml,
     }

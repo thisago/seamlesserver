@@ -2,6 +2,10 @@ import pkg/prologue
 
 const jsFile* {.strdefine.} = "main.js"
 
+# Session
+const
+  sess_username* = "username"
+
 let
   env = loadPrologueEnv ".env"
 

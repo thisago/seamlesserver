@@ -14,4 +14,4 @@ when not defined js:
 
   proc render*(ctx: Context) {.async.} =
     ## Server side homepage renderer
-    resp ssr renderHtml
+    resp ctx.ssr renderHtml
