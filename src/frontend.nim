@@ -14,22 +14,21 @@ proc render(rendered: Rendered): VNode =
   brData = rendered.parseBridgedData
   document.title = rendered.genTitle brData.appName
   result = buildHtml(tdiv):
+    renderHeader()
     rendered.renderErrors
     rendered.vnode
+    renderFooter()
 
 proc main =
   var s = newState()
 
   proc renderer(data: RouterData): VNode =
-    buildHtml(tdiv):
-      var noRoute = true
+    block renderPage:
       for (path, renderHtmlPage) in allRoutes:
         if $window.location.pathname == path:
-          render renderHtmlPage s
-          noRoute = false
-          break
-      if noRoute:
-        render notFound.renderHtml s
+          result = render renderHtmlPage s
+          break renderPage
+      result = render notFound.renderHtml s
   setRenderer renderer
 
   document.addEventListener("pushstate") do (ev: Event):

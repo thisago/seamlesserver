@@ -5,6 +5,12 @@ when defined js:
 
 include pkg/karax/prelude
 
+import base/header
+export header
+
+import base/footer
+export footer
+
 type
   Rendered* = ref object
     vnode*: VNode
@@ -67,8 +73,10 @@ when not defined js:
         meta(name="viewport", content="width=device-width, -scale=1.0")
       body:
         tdiv(id = "ROOT"):
+          renderHeader()
           rendered.renderErrors
           rendered.vnode
+          renderFooter()
         genBridgedData(
           appName = appName
         )

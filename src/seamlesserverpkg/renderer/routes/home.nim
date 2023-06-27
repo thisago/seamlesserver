@@ -7,7 +7,7 @@ proc renderHtml*(state = newState()): Rendered =
   ## Renders the HTML for homepage
   new result
   result.title = "Home"
-  result.vnode = buildHtml(tdiv):
+  result.vnode = buildHtml(main):
     h1: text "homepage"
     dynamicLink(href = "/user/login"):
       text "Login"

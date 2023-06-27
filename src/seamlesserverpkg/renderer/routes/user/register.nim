@@ -6,9 +6,9 @@ import ../../base
 proc renderHtml*(state = newState()): Rendered =
   ## Renders the HTML for homepage
   new result
-  result.title = "Login"
+  result.title = "Register"
   result.vnode = buildHtml(main):
-    h1: text "Login page"
+    h1: text "Register page"
     dynamicLink(href = "/"):
       text "Homepage"
 
