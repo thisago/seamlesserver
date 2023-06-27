@@ -1,6 +1,8 @@
 include pkg/karax/prelude
 
-proc renderFooter*: VNode =
+import ./state
+
+proc renderFooter*(state: State): VNode =
   ## Render page footer
   buildHtml(footer):
     text "footer"

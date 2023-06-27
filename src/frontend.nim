@@ -13,10 +13,10 @@ proc main =
     ## Renders the rendered object
     document.title = rendered.genTitle state.brData.appName
     result = buildHtml(tdiv):
-      renderHeader()
-      state.renderErrors
+      renderHeader state
+      renderErrors state
       rendered.vnode
-      renderFooter()
+      renderFooter state
 
   parseBridgedData state
   proc renderer(data: RouterData): VNode =

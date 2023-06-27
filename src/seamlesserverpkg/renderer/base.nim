@@ -34,10 +34,10 @@ when not defined js:
         meta(name = "viewport", content = "width=device-width, -scale=1.0")
       body:
         tdiv(id = "ROOT"):
-          renderHeader()
-          state.renderErrors
+          renderHeader state
+          renderErrors state
           rendered.vnode
-          renderFooter()
+          renderFooter state
         state.brData.genBridgedData
         script(src = "/" & jsDir / jsFile)
     result = $vnode
