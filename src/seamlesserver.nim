@@ -46,8 +46,10 @@ proc main =
       finally:
         await switch(ctx)
 
+  if settings.debug:
+    app.use debugRequestMiddleware()
+  
   app.use @[
-    debugRequestMiddleware(),
     sessionMw(),
     staticFileMiddleware jsDir
   ]
