@@ -26,8 +26,14 @@ requires "https://github.com/thisago/karax" # Karax. Single page applications fo
 
 # Tasks
 
+from std/os import `/`
+
 proc minify =
   exec "uglifyjs -o js/main.js js/main.js"
+
+task buildRelease, "Compile the server in danger mode":
+  exec "nimble -d:danger --opt:speed build"
+  exec "strip " & binDir / bin[0]
 
 task buildJs, "Compile Javascript":
   exec "nim js -o:js/main.js src/frontend"

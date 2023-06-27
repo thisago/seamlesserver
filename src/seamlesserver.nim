@@ -49,7 +49,7 @@ proc main =
   app.use @[
     debugRequestMiddleware(),
     sessionMw(),
-    staticFileMiddleware(jsDir)
+    staticFileMiddleware jsDir
   ]
 
   app.addRoute allRoutes

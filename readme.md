@@ -4,7 +4,7 @@
 
 #### A web template that backend and frontend are seamless connected!
 
-[About](#about) - [Stack](#stack) - [Features](#features) - [How it Works](#how-it-works) - [License](#license)
+[About](#about) **-** [Stack](#stack) **-** [Features](#features) **-** [How it Works](#how-it-works) **-** [Getting started](#getting-started) **-** [License](#license)
 
 </div>
 
@@ -50,6 +50,22 @@ The server renders the page with a blank state, since it's on server side.
 When your browser receive the rendered webpage, it is just a static page, but the Javascript will re-render the page as a SPA application, using the same models defined in backend.
 
 The SPA will change the pages without reloading and the state will be preserved, and even if you reload the page, the state will be stored in your browser's LocalStorage.
+
+## Getting started
+
+To run this server you'll need to compile the Javascript, to do that, just run:
+
+```bash
+$ nimble build_js_release # Compilation for production
+$ nimble build_js # Compilation for development
+```
+
+And run the server
+
+```bash
+$ nimble run # Build and run, for development
+$ nimble build_release # Build release version
+```
 
 ## License
 
