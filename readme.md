@@ -18,7 +18,7 @@ The page switching is made by Javascript, with `History.pushState`, so you can u
 
 ## Stack
 
-This template is built in [Nim language](nimlang) using the following library and frameworks:
+This template is built in [Nim language][nimlang] using the following library and frameworks:
 
 - **Web Framework**: [Prologue](https://github.com/planety/prologue)
 - **ORM**: [Norm](https://github.com/moigagoo/norm)
@@ -35,7 +35,7 @@ You can pre-render SPA pages in the server side
 The server can send a JSON to frontend seamless.
 
 The server renders a HTML script tag with a JSON on it and the
-frontend reads it and deserialize to a [`BridgedData`](bridgedDataDef)
+frontend reads it and deserialize to a [`BridgedData`][bridgedDataDef]
 
 ## How it Works
 
@@ -43,7 +43,7 @@ frontend reads it and deserialize to a [`BridgedData`](bridgedDataDef)
 
 The HTML rendering models are defined at [seamlesserverpkg/renderer/routes](src/seamlesserverpkg/renderer/routes), everything is reused, even states objects are shared!
 
-The renderer receives a reference to a [`State`](stateDef), it contains a instance of [`BridgedData`](bridgedDataDef) and a list of errors (like NodeJS flash messages). It returns an [`Rendered`](renderedDef), an object that contains the rendered `VNode` and the page title.
+The renderer receives a reference to a [`State`][stateDef], it contains a instance of [`BridgedData`][bridgedDataDef] and a list of errors (like NodeJS flash messages). It returns an [`Rendered`][renderedDef], an object that contains the rendered `VNode` and the page title.
 
 The server renders the page with a blank state, since it's on server side.
 
