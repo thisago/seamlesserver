@@ -5,7 +5,7 @@ from renderer/routes/home import nil
 
 const
   allRoutes* = @[
-    pattern("/", home.render, HttpGet, "home"),
+    pattern("/", home.render, HttpGet),
   ]
   defaultRoutes* = {
     Http404: notFound.render

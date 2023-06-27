@@ -1,5 +1,6 @@
 include pkg/karax/prelude
 
+import ../base
 import ../state
 
 proc renderHtml*(state: State): VNode =
@@ -12,4 +13,4 @@ when not defined js:
 
   proc render*(ctx: Context) {.async.} =
     ## Server side homepage renderer
-    resp $renderHtml newState()
+    resp baseHtml renderHtml newState()

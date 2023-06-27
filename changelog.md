@@ -9,3 +9,4 @@
 - Added logging middleware
 - Added env config
 - Added session middleware
+- Added base HTML
