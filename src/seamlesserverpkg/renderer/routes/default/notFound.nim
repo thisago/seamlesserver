@@ -1,8 +1,6 @@
 include pkg/karax/prelude
 
-import ../../[
-  state, base
-]
+import ../../state
 
 proc renderHtml*(state: State): VNode =
   ## Renders the HTML for homepage
@@ -11,6 +9,8 @@ proc renderHtml*(state: State): VNode =
 
 when not defined js:
   import pkg/prologue
+  
+  import ../../base
 
   proc render*(ctx: Context) {.async.} =
     ## Server side homepage renderer

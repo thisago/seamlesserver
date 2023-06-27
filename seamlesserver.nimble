@@ -25,5 +25,8 @@ requires "https://github.com/thisago/karax" # Karax. Single page applications fo
 
 # Tasks
 
+task buildJs, "Compile Javascript":
+  exec "nim js -o:js/main.js src/frontend"
+
 task genDocs, "Generate documentation":
   exec "rm -r docs; nim doc -d:usestd --git.commit:master --git.url:https://git.ozzuu.com/thisago/seamlesserver --project -d:ssl --out:docs ./src/seamlesserver.nim"

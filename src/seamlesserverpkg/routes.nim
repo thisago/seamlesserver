@@ -1,12 +1,18 @@
-import pkg/prologue
-
 from renderer/routes/default/notFound import nil
 from renderer/routes/home import nil
 
-const
-  allRoutes* = @[
-    pattern("/", home.render, HttpGet),
-  ]
-  defaultRoutes* = {
-    Http404: notFound.render
-  }
+when not defined js:
+  import pkg/prologue
+
+  const
+    allRoutes* = @[
+      pattern("/", home.render, HttpGet),
+    ]
+    defaultRoutes* = {
+      Http404: notFound.render
+    }
+else:
+  const
+    allRoutes* = {
+      "/": home.renderHtml,
+    }

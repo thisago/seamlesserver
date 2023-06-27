@@ -6,6 +6,7 @@ let
   host* = env.getOrDefault("host", "localhost")
   port* = env.getOrDefault("port", 8080)
   appName* = env.getOrDefault("appName", "seamlesserver")
+  jsDir* = env.getOrDefault("jsDir", "js")
 
   settings* = newSettings(
     appName = appName,

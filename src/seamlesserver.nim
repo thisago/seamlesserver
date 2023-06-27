@@ -2,8 +2,8 @@ import std/logging
 
 import pkg/prologue
 import pkg/prologue/middlewares/utils
+import pkg/prologue/middlewares/staticFile
 import pkg/prologue/middlewares/signedCookieSession
-
 import seamlesserverpkg/[
   config,
   routes,
@@ -41,7 +41,8 @@ proc main =
 
   app.use @[
     debugRequestMiddleware(),
-    sessionMw()
+    sessionMw(),
+    staticFileMiddleware(jsDir)
   ]
 
   app.addRoute(allRoutes, "/")

@@ -10,3 +10,4 @@
 - Added env config
 - Added session middleware
 - Added base HTML
+- Added frontend routing
