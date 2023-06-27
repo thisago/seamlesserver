@@ -4,7 +4,7 @@
 
 #### A web template that backend and frontend are seamless connected!
 
-[About](#about) **-** [Stack](#stack) **-** [Features](#features) **-** [How it Works](#how-it-works) **-** [Getting started](#getting-started) **-** [License](#license)
+**[About](#about) - [Stack](#stack) - [Features](#features) - [How it Works](#how-it-works) - [Getting started](#getting-started)** - [License](#license)
 
 </div>
 
