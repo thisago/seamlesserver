@@ -1,30 +1,33 @@
 include pkg/karax/prelude
 
-import base/[
+import seamlesserverpkg/renderer/base/[
   header,
   footer,
-  errors,
-  bridgedData,
+  flash,
   rendered,
   state
 ]
-export header, footer, errors, rendered, state
+export header, footer, flash, rendered, state
 
-import base/karaxNodes/dynamicLink
+import seamlesserverpkg/renderer/base/karaxNodes/dynamicLink
 export dynamicLink
 
 when not defined js:
   from std/os import `/`
+  from std/strutils import parseEnum
 
   import pkg/prologue except appName
 
-  import ../config
+  import seamlesserverpkg/config
+  import seamlesserverpkg/renderer/base/bridgedData
 
   type Render = proc(state: State): Rendered
 
   proc ssr*(ctx: Context; render: Render): string =
     ## Server side rendering of Karax model
-    let state = ctx.newState
+    var state = ctx.newState
+    for flash in ctx.getFlashedMsgsWithCategory():
+      state.brData.flash(parseEnum[FlashLevel](flash[0]), flash[1])
     withConf:
       let rendered = render state
       let
@@ -37,9 +40,9 @@ when not defined js:
       body:
         tdiv(id = "ROOT"):
           renderHeader state
-          renderErrors state
+          renderFlashes state.brData
           rendered.vnode
           renderFooter state
-        state.brData.genBridgedData
+        genBridgedData state.brData
         script(src = "/" & jsDir / jsFile)
     result = $vnode

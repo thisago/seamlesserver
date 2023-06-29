@@ -1,7 +1,7 @@
 include pkg/karax/prelude
 
-import ./state
-import ./karaxNodes/dynamicLink
+import seamlesserverpkg/renderer/base/state
+import seamlesserverpkg/renderer/base/karaxNodes/dynamicLink
 
 proc renderHeader*(state: State): VNode =
   ## Render page header

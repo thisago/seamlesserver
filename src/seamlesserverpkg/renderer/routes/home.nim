@@ -8,7 +8,7 @@ when not defined js:
 
 include pkg/karax/prelude
 
-import ../base
+import seamlesserverpkg/renderer/base
 
 const path* = "/"
 
@@ -23,7 +23,7 @@ proc renderHtml*(state: State): Rendered =
     pre: blockquote: text state.brData.devData
 
 when not defined js:
-  proc render*(ctx: Context) {.async.} =
+  proc get*(ctx: Context) {.async.} =
     ## GET login page
     doAssert ctx.request.reqMethod == HttpGet
     if ctx.isLogged:

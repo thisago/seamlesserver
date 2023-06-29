@@ -14,7 +14,7 @@ proc main =
     document.title = rendered.genTitle state.brData.appName
     result = buildHtml(tdiv):
       renderHeader state
-      renderErrors state
+      renderFlashes state.brData
       rendered.vnode
       renderFooter state
 

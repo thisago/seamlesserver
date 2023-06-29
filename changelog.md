@@ -6,6 +6,12 @@
 - Added register form
 - Added `BridgedData.devData` for development purposes (TODO: Remove it later)
 - Added debug user listing in home
+- Renamed routes serverside `render` to `get`
+- Fixed modules imports to absolute paths
+- Added email validation
+- Added POST route for registration (not implemented)
+- Fixed 404 error page code
+- Removed `State.errors` and replaced it by `BridgedData.flashes`
 
 ## Version alpha 0.0.3 (27/06/2023)
 

@@ -1,6 +1,6 @@
 include pkg/karax/prelude
 
-import ./state
+import seamlesserverpkg/renderer/base/state
 
 proc renderFooter*(state: State): VNode =
   ## Render page footer

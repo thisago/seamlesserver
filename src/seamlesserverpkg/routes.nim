@@ -1,20 +1,21 @@
-from renderer/routes/home import nil
-from renderer/routes/user/login import nil
-from renderer/routes/user/register import nil
+from seamlesserverpkg/renderer/routes/home import nil
+from seamlesserverpkg/renderer/routes/user/login import nil
+from seamlesserverpkg/renderer/routes/user/register import nil
 
 when not defined js:
   import pkg/prologue
 
-  from renderer/routes/default/notFound import nil
+  from seamlesserverpkg/renderer/routes/default/notFound import nil
 
   const
     allRoutes* = [
-      pattern(home.path, home.render, HttpGet),
-      pattern(login.path, login.render, HttpGet),
-      pattern(register.path, register.render, HttpGet),
+      pattern(home.path, home.get, HttpGet),
+      pattern(login.path, login.get, HttpGet),
+      pattern(register.path, register.get, HttpGet),
+      pattern(register.path, register.post, HttpPost),
     ]
     defaultRoutes* = {
-      Http404: notFound.render
+      Http404: notFound.get
     }
 else:
   const

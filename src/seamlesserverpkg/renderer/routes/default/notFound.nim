@@ -1,9 +1,9 @@
 include pkg/karax/prelude
 
-import ../../base
+import seamlesserverpkg/renderer/base
 
 proc renderHtml*(state: State): Rendered =
-  ## Renders the HTML for homepage
+  ## 404 error page HTML multi-backend renderer
   new result
   result.title = "Not Found"
   result.vnode = buildHtml(tdiv):
@@ -12,6 +12,7 @@ proc renderHtml*(state: State): Rendered =
 when not defined js:
   import pkg/prologue
 
-  proc render*(ctx: Context) {.async.} =
-    ## Server side homepage renderer
-    resp ctx.ssr renderHtml
+  proc get*(ctx: Context) {.async.} =
+    ## GET register page
+    doAssert ctx.request.reqMethod == HttpGet
+    resp ctx.ssr(renderHtml), Http404

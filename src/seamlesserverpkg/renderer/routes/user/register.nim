@@ -1,6 +1,8 @@
 include pkg/karax/prelude
 
-import ../../base
+import seamlesserverpkg/renderer/base
+from seamlesserverpkg/validation/email import nil
+import seamlesserverpkg/strs
 
 const path* = "/user/register"
 
@@ -14,32 +16,43 @@ proc renderHtml*(state: State): Rendered {.gcsafe.} =
       input(
         name = "username",
         placeholder = "Username",
-        `type` = "text"
+        `type` = "text",
+        value = "john2"
       )
       input(
         name = "email",
         placeholder = "Email",
-        `type` = "email"
+        # `type` = "email",
+        # pattern = email.pattern,
+        value = "john2@doe.com"
       )
       input(
         name = "password",
         placeholder = "Password",
-        `type` = "password"
+        `type` = "password",
+        value = "johnDoe1234"
       )
       button(`type` = "submit"): text "Submit"
 
 when not defined js:
   import pkg/prologue
 
-  proc render*(ctx: Context) {.async.} =
+  proc get*(ctx: Context) {.async.} =
     ## GET register page
     doAssert ctx.request.reqMethod == HttpGet
     resp ctx.ssr renderHtml
 
-  proc postRegister*(ctx: Context) {.async.} =
+  proc post*(ctx: Context) {.async.} =
     ## POST register page
     doAssert ctx.request.reqMethod == HttpPost
-    echo ctx.getPostParams("username")
-    echo ctx.getPostParams("email")
-    echo ctx.getPostParams("password")
-    # redirect "/"
+    let
+      username = ctx.getPostParams "username"
+      mail = ctx.getPostParams "email"
+      password = ctx.getPostParams "password"
+
+    block register:
+      if not email.check mail:
+        ctx.flash(umInvalidEmail, Error)
+
+      resp redirect "/"
+    resp redirect path

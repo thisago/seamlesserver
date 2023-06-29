@@ -1,8 +1,8 @@
 import pkg/prologue
 
-import ../config
-import ../db
-import ../db/models/user
+import seamlesserverpkg/config
+import seamlesserverpkg/db
+import seamlesserverpkg/db/models/user
 
 using
   ctx: Context

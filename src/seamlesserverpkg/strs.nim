@@ -1,0 +1,2 @@
+const
+  umInvalidEmail* = "Invalid email"

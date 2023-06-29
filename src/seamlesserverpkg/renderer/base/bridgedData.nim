@@ -1,11 +1,16 @@
 include pkg/karax/prelude
+from pkg/prologue/core/types import FlashLevel
 
 when not defined js:
-  import ../../config
+  import seamlesserverpkg/config
 
 type
+  FlashMessage* = object
+    level*: FlashLevel
+    text*: string
   BridgedData* = ref object
     appName*: string
+    flashes*: seq[FlashMessage]
     devData*: string
 
 const brDataDomJsonId* = kstring "bridgedData"
@@ -21,7 +26,10 @@ proc newBridgedData*: BridgedData =
       result.appName = appName
 
 when not defined js:
-  from std/json import `$`, `%*`, `%`
+  from std/json import `$`, `%*`, `%`, JsonNode
+
+  # proc `%`*(e: FlashLevel): JsonNode =
+  #   result = JsonNode(kind: JString, str: $e)
   
   func genBridgedData*(self): VNode =
     ## Generates the data that'll be sent to Javascript backend

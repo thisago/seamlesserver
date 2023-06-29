@@ -1,13 +1,12 @@
 when not defined js:
   import pkg/prologue
 
-import ./bridgedData
+import seamlesserverpkg/renderer/base/bridgedData
 
 type
   State* = ref object
     ## State of frontend page
     brData*: BridgedData
-    errors*: seq[string]
     when not defined js:
       ctx*: Context
 
@@ -29,6 +28,10 @@ else:
 when defined js:
   from std/json import parseJson, to
   from std/dom import document, getElementById, remove
+  
+  from pkg/prologue/core/types import FlashLevel
+
+  import seamlesserverpkg/renderer/base/flash
 
   proc parseBridgedData*(self) =
     ## Parses the BridgedData sent by server in a script tag
@@ -41,4 +44,4 @@ when defined js:
         to BridgedData
       remove bridgedDataEl
     except:
-      self.errors.add getCurrentExceptionMsg()
+      self.brData.flash(Error, getCurrentExceptionMsg())

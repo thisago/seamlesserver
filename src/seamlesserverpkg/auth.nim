@@ -1,4 +1,4 @@
-import checksums/bcrypt
+import pkg/checksums/bcrypt
 
 # import pkg/hmac
 

@@ -1,6 +1,6 @@
 include pkg/karax/prelude
 
-import ../../base
+import seamlesserverpkg/renderer/base
 
 const path* = "/user/login"
 
@@ -28,9 +28,9 @@ proc renderHtml*(state: State): Rendered =
 when not defined js:
   import pkg/prologue
 
-  import ../../utils
+  import seamlesserverpkg/renderer/utils
   
-  proc render*(ctx: Context) {.async.} =
+  proc get*(ctx: Context) {.async.} =
     ## GET login page
     doAssert ctx.request.reqMethod == HttpGet
     let user = ctx.loggedUser
