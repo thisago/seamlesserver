@@ -14,3 +14,6 @@ proc renderHeader*(state: State): VNode =
         text "Login"
       li: dynamicLink(href = "/user/register"):
         text "Register"
+      if state.brData.isLogged:
+        li: dynamicLink(href = "/user/logout"):
+          text "Logout"

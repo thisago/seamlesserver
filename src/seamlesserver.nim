@@ -3,7 +3,7 @@ import std/logging
 import pkg/prologue
 import pkg/prologue/middlewares/utils
 import pkg/prologue/middlewares/staticFile
-import pkg/prologue/middlewares/signedCookieSession
+import pkg/prologue/middlewares/sessions/memorysession
 
 import seamlesserverpkg/[
   config,
@@ -50,7 +50,7 @@ proc main =
     app.use debugRequestMiddleware()
   
   app.use @[
-    sessionMw(),
+    sessionMiddleware(settings),
     staticFileMiddleware jsDir
   ]
 

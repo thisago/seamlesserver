@@ -1,5 +1,6 @@
 when defined js:
-  from std/dom import preventDefault, window, pushState
+  from std/dom import preventDefault
+  from seamlesserverpkg/js/utils import redirect
 
 include pkg/karax/prelude
 
@@ -10,4 +11,4 @@ proc dynamicLink*(href = ""; title = ""): VNode =
     when defined js:
       proc onclick(ev: Event; n: VNode) =
         preventDefault ev
-        window.history.pushState("", "", href)
+        redirect href

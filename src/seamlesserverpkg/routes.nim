@@ -1,6 +1,7 @@
 from seamlesserverpkg/renderer/routes/home import nil
 from seamlesserverpkg/renderer/routes/user/login import nil
 from seamlesserverpkg/renderer/routes/user/register import nil
+from seamlesserverpkg/renderer/routes/user/logout import nil
 
 when not defined js:
   import pkg/prologue
@@ -13,6 +14,7 @@ when not defined js:
       pattern(login.path, login.get, HttpGet),
       pattern(register.path, register.get, HttpGet),
       pattern(register.path, register.post, HttpPost),
+      pattern(logout.path, logout.get, HttpGet),
     ]
     defaultRoutes* = {
       Http404: notFound.get
@@ -20,7 +22,7 @@ when not defined js:
 else:
   const
     allRoutes* = {
-      register.path: register.renderHtml,
       home.path: home.renderHtml,
+      register.path: register.renderHtml,
       login.path: login.renderHtml,
     }

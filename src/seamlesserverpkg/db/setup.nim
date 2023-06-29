@@ -1,5 +1,5 @@
-import ../db
-import ../db/models/user
+import seamlesserverpkg/db
+import seamlesserverpkg/db/models/user
 
 proc setup*(conn: DbConn) =
   ## Creates all tables

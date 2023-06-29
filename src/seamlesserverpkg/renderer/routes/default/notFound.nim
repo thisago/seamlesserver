@@ -4,7 +4,7 @@ import seamlesserverpkg/renderer/base
 
 proc renderHtml*(state: State): Rendered =
   ## 404 error page HTML multi-backend renderer
-  new result
+  result = newRendered()
   result.title = "Not Found"
   result.vnode = buildHtml(tdiv):
     h1: text "404: Not found"

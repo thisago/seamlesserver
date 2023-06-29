@@ -1,3 +1,7 @@
+from std/strutils import join
+from std/strformat import fmt
+from std/logging import debug
+
 import pkg/norm/sqlite
 export sqlite
 
@@ -14,10 +18,7 @@ template inDb*(body: untyped) =
     withLock dbLock:
       body
 
-from std/strutils import join
-from std/strformat import fmt
-
-func genQuery(
+proc genQuery(
   tableName: string;
   keys: openArray[string];
   values: openArray[string];
@@ -27,8 +28,8 @@ func genQuery(
   var query: seq[string]
   for key in keys:
     query.add tableName & "." & key & " = ?"
-  var vals: seq[DbValue]
   result = query.join fmt" {operator} "
+  debug result
 
 func toDbValues[T](vals: varargs[T]): seq[DbValue] =
   ## Converts all values to DbValue
@@ -44,13 +45,16 @@ proc get*[T](
   ## Select the row of table with provided keys and values
   result = new table
   if keys.len == values.len:
-    inDb: dbConn.select(
-      result,
-      astToStr(table).genQuery(keys, values, operator),
-      values.toDbValues
-    )
+    try:
+      inDb: dbConn.select(
+        result,
+        genQuery($table, keys, values, operator),
+        values.toDbValues
+      )
+    except:
+      result = nil
 
-proc getAll*[T](
+proc getAll*[T: ref object](
   table: typedesc[T];
   keys: openArray[string];
   values: openArray[string];
@@ -62,18 +66,16 @@ proc getAll*[T](
     try:
       inDb: dbConn.select(
         result,
-        astToStr(table).genQuery(keys, values, operator),
+        genQuery($table, keys, values, operator),
         values.toDbValues
       )
     except:
       result.del 0
-      raise getCurrentException()
 
-proc getAll*[T](table: typedesc[T]): seq[T] =
+proc getAll*[T: ref object](table: typedesc[T]): seq[T] =
   ## Select all rows of table
   result = @[new table]
   try:
-    inDb: dbConn.selectAll(result)
+    inDb: dbConn.selectAll result
   except:
     result.del 0
-    raise getCurrentException()

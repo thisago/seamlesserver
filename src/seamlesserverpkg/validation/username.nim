@@ -1,4 +1,4 @@
-const pattern* = r"""^.{,16}$"""
+const pattern* = r"""^.{2,16}$"""
 
 when not defined js:
   import std/re

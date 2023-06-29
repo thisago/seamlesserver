@@ -18,7 +18,7 @@ proc main =
       rendered.vnode
       renderFooter state
 
-  parseBridgedData state
+  parseBridgedData state.brData
   proc renderer(data: RouterData): VNode =
     block renderPage:
       for (path, renderHtmlPage) in allRoutes:
@@ -26,10 +26,10 @@ proc main =
           result = render renderHtmlPage state
           break renderPage
       result = render notFound.renderHtml state
+    autoDeleteFlashes state.brData.flashes
 
   setRenderer renderer
   
-  autoDeleteFlashes state.brData.flashes
   # TODO: Mutation observer of location.pathname
 
 when isMainModule:

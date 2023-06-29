@@ -3,7 +3,8 @@ import pkg/norm/[
   pragmas
 ]
 
-from ../../auth import makeSalt, makePassword
+from seamlesserverpkg/auth import makeSalt, makePassword
+import seamlesserverpkg/db
 
 type
   User* = ref object of Model
@@ -47,8 +48,6 @@ proc newUser*: User =
   ## Creates new blank user
   newUser("", "", "")
 
-import ../../db
-
 proc get*(_: type User; email = ""; username = ""): User =
   ## Get the user by email or username
   var
@@ -62,3 +61,8 @@ proc get*(_: type User; email = ""; username = ""): User =
     values.add username
   if keys.len > 0:
     result = User.get(keys, values)
+
+proc add*(_: type User; username, email, password: string) =
+  ## Add a new user to DB
+  var user = newUser(username, email, password)
+  inDb: dbconn.insert user

@@ -26,6 +26,7 @@ requires "https://github.com/thisago/karax" # Single page applications for Nim. 
 
 from std/os import `/`, commandLineParams
 from std/strformat import fmt
+from std/hashes import hash
 
 let
   jsDir = binDir / "js"
@@ -33,6 +34,7 @@ let
   jsFilePath = jsDir / jsFile
   envFile = ".env"
 
+  flags = fmt""
   jsFlags = fmt"-d:jsFile={jsFile} -o:{jsFilePath}"
   serverFlags = "--mm:orc --deepcopy:on --define:lto -d:ssl"
   releaseFlags = "-d:danger --opt:speed"
@@ -41,7 +43,7 @@ proc minify =
   exec fmt"uglifyjs -o {jsFilePath} {jsFilePath}"
 
 task buildServer, "Builds the server in development mode":
-  exec fmt"nimble {serverFlags} build"
+  exec fmt"nimble {flags} {serverFlags} build"
 
 task runServer, "Builds the server in debug and run it!":
   if not fileExists binDir / envFile:
@@ -50,14 +52,15 @@ task runServer, "Builds the server in debug and run it!":
   exec fmt"clear && cd {binDir} && ./{bin[0]}"
 
 task buildServerRelease, "Compile the server in danger mode":
-  exec fmt"nimble {serverFlags} {releaseFlags} build"
+  exec fmt"nimble {flags} {serverFlags} {releaseFlags} build"
   exec "strip " & binDir / bin[0]
 
 task buildJs, "Compile Javascript":
-  exec fmt"nim js {jsFlags} src/frontend" & (
-    if commandLineParams()[^1] == "background": " &" else: ""
+  let bg = commandLineParams()[^1] == "background"
+  exec fmt"nim js {flags} {jsFlags} src/frontend" & (
+    bg: " &" else: ""
   )
-  minify()
+  if not bg: minify()
 
 task buildJsRelease, "Compile Javascript in danger mode":
   exec fmt"nim js -d:danger -o:{jsFilePath} src/frontend"

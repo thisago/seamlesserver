@@ -1,10 +1,15 @@
 when not defined js:
   import pkg/prologue
-  import ../utils
+  import seamlesserverpkg/auth/utils
 
   import std/json, std/jsonutils
-  import ../../db
-  import ../../db/models/user
+  import seamlesserverpkg/db
+  import seamlesserverpkg/db/models/user
+
+  import seamlesserverpkg/auth/utils
+
+else:
+  from std/dom import window, reload
 
 include pkg/karax/prelude
 
@@ -14,19 +19,24 @@ const path* = "/"
 
 proc renderHtml*(state: State): Rendered =
   ## Home page HTML multi-backend renderer
-  new result
+  result = newRendered()
   when not defined js:
     state.brData.devData = pretty toJson User.getAll()
+  else:
+    if state.brData.devData.len == 0:
+      window.location.reload()
   result.title = "Home"
   result.vnode = buildHtml(main):
     h1: text "homepage"
     pre: blockquote: text state.brData.devData
+    h2: text (if state.brData.isLogged: "logged in" else: "not logged in")
+  when not defined js:
+    result.ssrvnodes.after = buildHtml(tdiv):
+      h2: text "server says: " & (if state.ctx.isLogged: "logged in" else: "not logged")
+
 
 when not defined js:
   proc get*(ctx: Context) {.async.} =
     ## GET login page
     doAssert ctx.request.reqMethod == HttpGet
-    if ctx.isLogged:
-      resp "logged in!"
-    else:
-      resp ctx.ssr renderHtml
+    resp ctx.ssr renderHtml

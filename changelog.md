@@ -5,6 +5,15 @@
 - Added password validation
 - Fixed email regex validator
 - Added flash auto deleting (animation will be cool)
+- Implemented user registration
+  - Checks if username or email was been used
+- Base64 encoding the BridgedData
+- Added optional VNode in server-side before and after `div#ROOT` that frontend won't override
+- Fixed session persistance by using `memorysession` middleware
+- Added page blocking in front/backend; example: access login page just when you're logged off
+- Increased server's flashes time to 5s
+- Added logout route
+- Fixed flash auto deleting
 
 ## Version alpha 0.0.4 (29/06/2023)
 
