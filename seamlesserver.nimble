@@ -33,13 +33,15 @@ let
   jsFilePath = jsDir / jsFile
   envFile = ".env"
 
-  flags = fmt"-d:jsFile={jsFile}"
+  jsFlags = fmt"-d:jsFile={jsFile} -o:{jsFilePath}"
+  serverFlags = "--mm:orc --deepcopy:on --define:lto -d:ssl"
+  releaseFlags = "-d:danger --opt:speed"
 
 proc minify =
   exec fmt"uglifyjs -o {jsFilePath} {jsFilePath}"
 
 task buildServer, "Builds the server in development mode":
-  exec fmt"nimble {flags} build"
+  exec fmt"nimble {serverFlags} build"
 
 task runServer, "Builds the server in debug and run it!":
   if not fileExists binDir / envFile:
@@ -48,11 +50,11 @@ task runServer, "Builds the server in debug and run it!":
   exec fmt"cd {binDir} && ./{bin[0]}"
 
 task buildServerRelease, "Compile the server in danger mode":
-  exec fmt"nimble {flags} -d:danger --opt:speed build"
+  exec fmt"nimble {serverFlags} {releaseFlags} build"
   exec "strip " & binDir / bin[0]
 
 task buildJs, "Compile Javascript":
-  exec fmt"nim js -o:{jsFilePath} src/frontend" & (
+  exec fmt"nim js {jsFlags} src/frontend" & (
     if commandLineParams()[^1] == "background": " &" else: ""
   )
   minify()
@@ -76,4 +78,8 @@ task compileAllRelease, "Builds the JS in background while building server; All 
 
 task r, "Debug build all and run":
   compileAllTask()
+  runServerTask()
+
+task buildRunServer, "Debug build the server and run ir":
+  buildServerTask()
   runServerTask()

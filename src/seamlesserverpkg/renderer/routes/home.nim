@@ -2,6 +2,10 @@ when not defined js:
   import pkg/prologue
   import ../utils
 
+  import std/json, std/jsonutils
+  import ../../db
+  import ../../db/models/user
+
 include pkg/karax/prelude
 
 import ../base
@@ -9,18 +13,20 @@ import ../base
 const path* = "/"
 
 proc renderHtml*(state: State): Rendered =
-  ## Renders the HTML for homepage
+  ## Home page HTML multi-backend renderer
   new result
+  when not defined js:
+    state.brData.devData = pretty toJson User.getAll()
   result.title = "Home"
   result.vnode = buildHtml(main):
     h1: text "homepage"
-    when not defined js:
-      p:
-        text if state.ctx.isLogged: "logged user" else: "not logged"
-    
-when not defined js:
-  import pkg/prologue
+    pre: blockquote: text state.brData.devData
 
+when not defined js:
   proc render*(ctx: Context) {.async.} =
-    ## Server side homepage renderer
-    resp ctx.ssr renderHtml
+    ## GET login page
+    doAssert ctx.request.reqMethod == HttpGet
+    if ctx.isLogged:
+      resp "logged in!"
+    else:
+      resp ctx.ssr renderHtml

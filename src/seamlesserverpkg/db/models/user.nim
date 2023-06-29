@@ -46,7 +46,9 @@ proc newUser*(
 proc newUser*: User =
   ## Creates new blank user
   newUser("", "", "")
-  
+
+import ../../db
+
 proc get*(_: type User; email = ""; username = ""): User =
   ## Get the user by email or username
   var
@@ -59,4 +61,4 @@ proc get*(_: type User; email = ""; username = ""): User =
     keys.add "username"
     values.add username
   if keys.len > 0:
-    result = User.getFromDb(keys, values)
+    result = User.get(keys, values)

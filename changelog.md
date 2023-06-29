@@ -1,5 +1,12 @@
 # Changelog
 
+## Version alpha 0.0.4 (29/06/2023)
+
+- Added `Model.getAll` DB query function
+- Added register form
+- Added `BridgedData.devData` for development purposes (TODO: Remove it later)
+- Added debug user listing in home
+
 ## Version alpha 0.0.3 (27/06/2023)
 
 - Removed debug middleware when not in debug mode

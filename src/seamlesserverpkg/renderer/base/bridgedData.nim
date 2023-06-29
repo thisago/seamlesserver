@@ -6,6 +6,7 @@ when not defined js:
 type
   BridgedData* = ref object
     appName*: string
+    devData*: string
 
 const brDataDomJsonId* = kstring "bridgedData"
 

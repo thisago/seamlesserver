@@ -17,22 +17,63 @@ template inDb*(body: untyped) =
 from std/strutils import join
 from std/strformat import fmt
 
-proc getFromDb*[T](
-  table: typedesc[T];
+func genQuery(
+  tableName: string;
   keys: openArray[string];
-  values: varargs[string],
-  operator = "and",
-): T =
-  let tableName = astToStr table
+  values: openArray[string];
+  operator = "and"
+): string =
+  ## Generates a query string for provided data
   var query: seq[string]
   for key in keys:
     query.add tableName & "." & key & " = ?"
-  result = new table
   var vals: seq[DbValue]
-  for val in values:
-    vals.add dbValue val
-  inDb: dbConn.select(
-    result,
-    query.join fmt" {operator} ",
-    vals
-  )
+  result = query.join fmt" {operator} "
+
+func toDbValues[T](vals: varargs[T]): seq[DbValue] =
+  ## Converts all values to DbValue
+  for val in vals:
+    result.add dbValue val
+
+proc get*[T](
+  table: typedesc[T];
+  keys: openArray[string];
+  values: openArray[string];
+  operator = "and"
+): T =
+  ## Select the row of table with provided keys and values
+  result = new table
+  if keys.len == values.len:
+    inDb: dbConn.select(
+      result,
+      astToStr(table).genQuery(keys, values, operator),
+      values.toDbValues
+    )
+
+proc getAll*[T](
+  table: typedesc[T];
+  keys: openArray[string];
+  values: openArray[string];
+  operator = "and"
+): seq[T] =
+  ## Select all rows of table with provided keys and values
+  result = @[new table]
+  if keys.len > 0 and keys.len == values.len:
+    try:
+      inDb: dbConn.select(
+        result,
+        astToStr(table).genQuery(keys, values, operator),
+        values.toDbValues
+      )
+    except:
+      result.del 0
+      raise getCurrentException()
+
+proc getAll*[T](table: typedesc[T]): seq[T] =
+  ## Select all rows of table
+  result = @[new table]
+  try:
+    inDb: dbConn.selectAll(result)
+  except:
+    result.del 0
+    raise getCurrentException()

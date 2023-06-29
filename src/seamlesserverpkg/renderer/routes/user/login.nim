@@ -5,7 +5,7 @@ import ../../base
 const path* = "/user/login"
 
 proc renderHtml*(state: State): Rendered =
-  ## Renders the HTML for homepage
+  ## Login page HTML multi-backend renderer
   new result
   result.title = "Login"
   result.vnode = buildHtml(main):
@@ -31,7 +31,8 @@ when not defined js:
   import ../../utils
   
   proc render*(ctx: Context) {.async.} =
-    ## Server side homepage renderer
+    ## GET login page
+    doAssert ctx.request.reqMethod == HttpGet
     let user = ctx.loggedUser
     if user.isNil:
       discard redirect "/"
