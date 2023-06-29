@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.0.3"
+version       = "0.0.5"
 author        = "Thiago Navarro"
 description   = "A web template that backend and frontend are seamless connected!"
 license       = "MIT"
@@ -47,7 +47,7 @@ task runServer, "Builds the server in debug and run it!":
   if not fileExists binDir / envFile:
     echo fmt"Env not exists in '{binDir}' dir, using the template."
     cpFile envFile, binDir / envFile
-  exec fmt"cd {binDir} && ./{bin[0]}"
+  exec fmt"clear && cd {binDir} && ./{bin[0]}"
 
 task buildServerRelease, "Compile the server in danger mode":
   exec fmt"nimble {serverFlags} {releaseFlags} build"

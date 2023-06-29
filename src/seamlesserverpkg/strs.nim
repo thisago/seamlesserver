@@ -1,2 +1,0 @@
-const
-  umInvalidEmail* = "Invalid email"

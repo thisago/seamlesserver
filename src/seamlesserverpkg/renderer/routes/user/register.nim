@@ -1,8 +1,10 @@
 include pkg/karax/prelude
 
+import seamlesserverpkg/userMessages
 import seamlesserverpkg/renderer/base
+from seamlesserverpkg/validation/username import nil
 from seamlesserverpkg/validation/email import nil
-import seamlesserverpkg/strs
+from seamlesserverpkg/validation/password import nil
 
 const path* = "/user/register"
 
@@ -17,6 +19,7 @@ proc renderHtml*(state: State): Rendered {.gcsafe.} =
         name = "username",
         placeholder = "Username",
         `type` = "text",
+        # pattern = username.pattern,
         value = "john2"
       )
       input(
@@ -30,6 +33,7 @@ proc renderHtml*(state: State): Rendered {.gcsafe.} =
         name = "password",
         placeholder = "Password",
         `type` = "password",
+        # pattern = password.pattern,
         value = "johnDoe1234"
       )
       button(`type` = "submit"): text "Submit"
@@ -46,13 +50,20 @@ when not defined js:
     ## POST register page
     doAssert ctx.request.reqMethod == HttpPost
     let
-      username = ctx.getPostParams "username"
+      user = ctx.getPostParams "username"
       mail = ctx.getPostParams "email"
-      password = ctx.getPostParams "password"
+      pass = ctx.getPostParams "password"
 
     block register:
+      if not username.check user:
+        ctx.flash(umInvalidUsername, Error)
+        break register
       if not email.check mail:
         ctx.flash(umInvalidEmail, Error)
+        break register
+      if not password.check pass:
+        ctx.flash(umInvalidPassword, Error)
+        break register
 
       resp redirect "/"
     resp redirect path

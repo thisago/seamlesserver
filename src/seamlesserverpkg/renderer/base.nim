@@ -28,6 +28,7 @@ when not defined js:
     var state = ctx.newState
     for flash in ctx.getFlashedMsgsWithCategory():
       state.brData.flash(parseEnum[FlashLevel](flash[0]), flash[1])
+    state.brData.flash(Info, "Hellow from server! this message will disappear after 2s", 2000)
     withConf:
       let rendered = render state
       let
@@ -40,7 +41,7 @@ when not defined js:
       body:
         tdiv(id = "ROOT"):
           renderHeader state
-          renderFlashes state.brData
+          renderFlashes state.brData.flashes
           rendered.vnode
           renderFooter state
         genBridgedData state.brData

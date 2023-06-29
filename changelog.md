@@ -1,5 +1,11 @@
 # Changelog
 
+## Version alpha 0.0.5 (29/06/2023)
+
+- Added password validation
+- Fixed email regex validator
+- Added flash auto deleting (animation will be cool)
+
 ## Version alpha 0.0.4 (29/06/2023)
 
 - Added `Model.getAll` DB query function

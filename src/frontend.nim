@@ -14,7 +14,7 @@ proc main =
     document.title = rendered.genTitle state.brData.appName
     result = buildHtml(tdiv):
       renderHeader state
-      renderFlashes state.brData
+      renderFlashes state.brData.flashes
       rendered.vnode
       renderFooter state
 
@@ -29,6 +29,7 @@ proc main =
 
   setRenderer renderer
   
+  autoDeleteFlashes state.brData.flashes
   # TODO: Mutation observer of location.pathname
 
 when isMainModule:
