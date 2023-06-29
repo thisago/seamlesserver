@@ -24,7 +24,7 @@ requires "https://github.com/thisago/karax" # Single page applications for Nim. 
 
 # Tasks
 
-from std/os import `/`
+from std/os import `/`, commandLineParams
 from std/strformat import fmt
 
 let
@@ -45,15 +45,16 @@ task runServer, "Builds the server in debug and run it!":
   if not fileExists binDir / envFile:
     echo fmt"Env not exists in '{binDir}' dir, using the template."
     cpFile envFile, binDir / envFile
-  buildServerTask()
   exec fmt"cd {binDir} && ./{bin[0]}"
 
-task buildRelease, "Compile the server in danger mode":
+task buildServerRelease, "Compile the server in danger mode":
   exec fmt"nimble {flags} -d:danger --opt:speed build"
   exec "strip " & binDir / bin[0]
 
 task buildJs, "Compile Javascript":
-  exec fmt"nim js -o:{jsFilePath} src/frontend"
+  exec fmt"nim js -o:{jsFilePath} src/frontend" & (
+    if commandLineParams()[^1] == "background": " &" else: ""
+  )
   minify()
 
 task buildJsRelease, "Compile Javascript in danger mode":
@@ -65,6 +66,14 @@ task genDocs, "Generate documentation":
        "nim doc -d:usestd --git.commit:master --project -d:ssl --out:docs ./src/seamlesserver.nim;" &
        "nim doc -d:usestd --git.commit:master --project -d:ssl --out:docs ./src/frontend.nim"
 
+task compileAll, "Builds the JS in background while building server":
+  exec "nimble build_js background"
+  buildServerTask()
+
+task compileAllRelease, "Builds the JS in background while building server; All in release mode":
+  exec "nimble build_js_release background"
+  buildServerReleaseTask()
+
 task r, "Debug build all and run":
-  buildJsTask()
+  compileAllTask()
   runServerTask()
