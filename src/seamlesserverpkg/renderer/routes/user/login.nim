@@ -46,12 +46,11 @@ when not defined js:
   from seamlesserverpkg/auth/utils import isLogged
   from seamlesserverpkg/config import sess_username
   from seamlesserverpkg/db/models/user import User, add, get
-  from seamlesserverpkg/userMessages import umAlreadyLoggedIn, umUserNotExists,
-                                              umWrongPassword, umLoginSuccess
+  from seamlesserverpkg/userMessages import umUserNotExists, umWrongPassword,
+                                            umLoginSuccess
 
   proc get*(ctx: Context) {.async.} =
     ## GET login page
-    doAssert ctx.request.reqMethod == HttpGet
     if ctx.isLogged:
       ctx.flash(umAlreadyLoggedIn, Warning)
       resp redirect "/"
@@ -75,7 +74,6 @@ when not defined js:
       if u.isNil:
         ctx.flash(umUserNotExists, Error)
         break loggingIn
-      echo u[]
       
       if not pass.isPasswordSame(u.password, u.salt):
         ctx.flash(umWrongPassword, Error)
@@ -85,4 +83,6 @@ when not defined js:
 
       ctx.flash(umLoginSuccess, Info)
       resp redirect "/"
-    resp redirect path
+      return
+    await ctx.get
+    ctx.response.code = Http401

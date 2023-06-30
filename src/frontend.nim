@@ -18,7 +18,9 @@ proc main =
       rendered.vnode
       renderFooter state
 
+  load state
   parseBridgedData state.brData
+
   proc renderer(data: RouterData): VNode =
     block renderPage:
       for (path, renderHtmlPage) in allRoutes:
@@ -27,6 +29,7 @@ proc main =
           break renderPage
       result = render notFound.renderHtml state
     autoDeleteFlashes state.brData.flashes
+    save state
 
   setRenderer renderer
   

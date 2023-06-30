@@ -2,7 +2,11 @@
 
 ## Version alpha 0.0.7 (30/06/2023)
 
-- Removed "test" text in ssr before and after nodes
+- Removed "test" text in SSR before and after nodes
+- Added State persistance in localStorage
+- Server sends HTTP code 401 when login is incorrect
+- Server sends HTTP code 400 when registration was failed, 409 when username or email already exists and 500 when some DB error occurred
+- Instead of redirecting same page from POST to GET, it now renders the GET page in the POST. Faster loading
 
 ## Version alpha 0.0.6 (30/06/2023)
 

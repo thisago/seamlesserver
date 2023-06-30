@@ -72,7 +72,6 @@ when not defined js:
 
   proc get*(ctx: Context) {.async.} =
     ## GET register page
-    doAssert ctx.request.reqMethod == HttpGet
     if ctx.isLogged:
       ctx.flash(umAlreadyLoggedIn, Warning)
       resp redirect "/"
@@ -82,7 +81,7 @@ when not defined js:
   proc post*(ctx: Context) {.async.} =
     ## POST register page
     doAssert ctx.request.reqMethod == HttpPost
-
+    var code = Http400
     block registering:
       if ctx.isLogged:
         ctx.flash(umAlreadyLoggedIn, Error)
@@ -112,6 +111,7 @@ when not defined js:
             ctx.flash(umEmailExists, Error)
           else:
             ctx.flash(umRegisterError, Error)
+          code = Http409
           break registering
 
       try:
@@ -123,9 +123,12 @@ when not defined js:
       except:
         ctx.flash(umRegisterError, Error)
         error "Register error: " & getCurrentExceptionMsg()
+        code = Http500
         break registering
 
       ctx.session[sess_username] = user
       ctx.flash(umRegisterSuccess, Info)
       resp redirect "/"
-    resp redirect path
+      return
+    await ctx.get
+    ctx.response.code = code

@@ -1,6 +1,3 @@
-from std/base64 import encode, decode
-from std/times import Duration, DateTime
-
 include pkg/karax/prelude
 from pkg/prologue/core/types import FlashLevel
 export FlashLevel
@@ -45,7 +42,7 @@ when not defined js:
     ## Generates the data that'll be sent to Javascript backend
     let node = $ %*self
     buildHtml(script(id = brDataDomJsonId, `type` = "plain/text")):
-      verbatim #[encode]# node
+      verbatim node
 else:
   from std/json import parseJson, to
   from std/dom import document, getElementById, remove
@@ -61,7 +58,6 @@ else:
       mself = bridgedDataEl.
         innerText.
         `$`.
-        # decode.
         parseJson.
         to BridgedData
       remove bridgedDataEl
