@@ -1,5 +1,5 @@
-import seamlesserverpkg/db
-import seamlesserverpkg/db/models/user
+from seamlesserverpkg/db import DbConn, createTables, insert
+from seamlesserverpkg/db/models/user import newUser, ukAdmin
 
 proc setup*(conn: DbConn) =
   ## Creates all tables

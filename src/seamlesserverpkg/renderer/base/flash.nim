@@ -25,7 +25,7 @@ proc flash*(
   brData.flashes.add FlashMessage(
     level: level,
     text: text,
-    created: getTime().toUnix,
+    createdAt: getTime().toUnix,
     duration: duration
   )
 

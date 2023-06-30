@@ -1,3 +1,5 @@
+from std/times import getTime, toUnix
+
 import pkg/norm/[
   model,
   pragmas
@@ -12,6 +14,7 @@ type
     username* {.unique.}: string
     email* {.unique.}: string
     password*, salt*: string
+    registeredAt*: int64 ## Unix time
 
     internal_kind*: int # User kind (internal)
 
@@ -41,6 +44,7 @@ proc newUser*(
   result.email = email
   result.kind = kind
 
+  result.registeredAt = getTime().toUnix
   result.salt = makeSalt()
   result.password = makePassword(password, result.salt)
 
@@ -62,7 +66,7 @@ proc get*(_: type User; email = ""; username = ""; operator = "or"): User =
   if keys.len > 0:
     result = User.get(keys, values, operator)
 
-proc add*(_: type User; username, email, password: string) =
+proc add*(_: type User; username, email, password: string; kind = ukGhost) =
   ## Add a new user to DB
-  var user = newUser(username, email, password)
+  var user = newUser(username, email, password, kind)
   inDb: dbconn.insert user

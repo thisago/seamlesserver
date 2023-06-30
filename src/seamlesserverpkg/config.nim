@@ -1,44 +1,47 @@
-from std/os import `/`
-
-import pkg/prologue
-
 const
-  jsFile* {.strdefine.} = "app.js"
-  webManifestFile* {.strdefine.} = "manifest.json"
-  serviceWorkerFile* {.strdefine.} = "sw.js"
+  serviceWorkerFile* = "sw.js"
 
-# Session
-const
-  sess_username* = "username"
+when not defined js:
+  from std/os import `/`
 
-let
-  env = loadPrologueEnv ".env"
+  import pkg/prologue
 
-  dbHost* = env.getOrDefault("dbHost", ":memory:")
-  dbUser* = env.getOrDefault("dbUser", "")
-  dbPass* = env.getOrDefault("dbPass", "")
+  const
+    jsFile* {.strdefine.} = "app.js"
+    webManifestFile* {.strdefine.} = "manifest.json"
 
-  host* = env.getOrDefault("host", "localhost")
-  port* = env.getOrDefault("port", 8080)
-  appName* = env.getOrDefault("appName", "seamlesserver")
-  jsDir* = env.getOrDefault("jsDir", "js/")
-  assetsDir* = env.getOrDefault("assetsDir", "assets/")
+  # Session
+  const
+    sess_username* = "username"
 
-  settings* = newSettings(
-    appName = appName,
-    debug = env.getOrDefault("debug", true),
-    port = Port port,
-    secretKey = env.getOrDefault("secretKey", ""),
-    address = host
-  )
+  let
+    env = loadPrologueEnv ".env"
 
-  errorLog* = env.getOrDefault("errorLog", "error.log")
-  rollingLog* = env.getOrDefault("rollingLog", "rolling.log")
+    dbHost* = env.getOrDefault("dbHost", ":memory:")
+    dbUser* = env.getOrDefault("dbUser", "")
+    dbPass* = env.getOrDefault("dbPass", "")
 
-let
-  iconsDir* = assetsDir / "icons"
+    host* = env.getOrDefault("host", "localhost")
+    port* = env.getOrDefault("port", 8080)
+    appName* = env.getOrDefault("appName", "seamlesserver")
+    jsDir* = env.getOrDefault("jsDir", "js/")
+    assetsDir* = env.getOrDefault("assetsDir", "assets/")
 
-template withConf*(body: untyped) =
-  ## Dirt trick to bypass gcsafe check
-  {.gcsafe.}:
-    body
+    settings* = newSettings(
+      appName = appName,
+      debug = env.getOrDefault("debug", true),
+      port = Port port,
+      secretKey = env.getOrDefault("secretKey", ""),
+      address = host
+    )
+
+    errorLog* = env.getOrDefault("errorLog", "error.log")
+    rollingLog* = env.getOrDefault("rollingLog", "rolling.log")
+
+  let
+    iconsDir* = assetsDir / "icons"
+
+  template withConf*(body: untyped) =
+    ## Dirt trick to bypass gcsafe check
+    {.gcsafe.}:
+      body

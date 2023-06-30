@@ -1,7 +1,6 @@
 import pkg/prologue
 
 from seamlesserverpkg/config import sess_username
-# from seamlesserverpkg/db import 
 from seamlesserverpkg/db/models/user import User, get
 
 using

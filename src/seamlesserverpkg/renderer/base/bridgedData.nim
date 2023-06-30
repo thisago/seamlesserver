@@ -9,7 +9,7 @@ type
   FlashMessage* = object
     level*: FlashLevel
     text*: string
-    created*: int64 ## unix time
+    createdAt*: int64 ## unix time
     duration*: int ## ms
     deleting*: bool
   BridgedData* = ref object
