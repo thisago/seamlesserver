@@ -1,4 +1,4 @@
 build/
 docs/
 *.log
-js/
+js/app.js

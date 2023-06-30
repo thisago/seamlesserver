@@ -1,6 +1,11 @@
+from std/os import `/`
+
 import pkg/prologue
 
-const jsFile* {.strdefine.} = "main.js"
+const
+  jsFile* {.strdefine.} = "app.js"
+  webManifestFile* {.strdefine.} = "manifest.json"
+  serviceWorkerFile* {.strdefine.} = "sw.js"
 
 # Session
 const
@@ -16,7 +21,8 @@ let
   host* = env.getOrDefault("host", "localhost")
   port* = env.getOrDefault("port", 8080)
   appName* = env.getOrDefault("appName", "seamlesserver")
-  jsDir* = env.getOrDefault("jsDir", "js")
+  jsDir* = env.getOrDefault("jsDir", "js/")
+  assetsDir* = env.getOrDefault("assetsDir", "assets/")
 
   settings* = newSettings(
     appName = appName,
@@ -28,6 +34,9 @@ let
 
   errorLog* = env.getOrDefault("errorLog", "error.log")
   rollingLog* = env.getOrDefault("rollingLog", "rolling.log")
+
+let
+  iconsDir* = assetsDir / "icons"
 
 template withConf*(body: untyped) =
   ## Dirt trick to bypass gcsafe check

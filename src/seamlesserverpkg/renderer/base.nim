@@ -19,7 +19,8 @@ when not defined js:
 
   import pkg/prologue except appName
 
-  import seamlesserverpkg/config
+  from seamlesserverpkg/config import withConf, appName, jsDir, iconsDir, jsFile,
+                                        assetsDir, webManifestFile
   from seamlesserverpkg/auth/utils import isLogged
 
   type Render = proc(state: State): Rendered
@@ -31,16 +32,24 @@ when not defined js:
       state.brData.flash(flash[1], parseEnum[FlashLevel](flash[0]))
     state.brData.flash("Hellow from server! this message will disappear after 2s", Info, 2000)
     state.brData.isLogged = ctx.isLogged
-    echo state.brData.isLogged
     withConf:
       let rendered = render state
       let
         appName = appName
         jsDir = jsDir
+        assetsDir = assetsDir
+        iconsDir = iconsDir
     let vnode = buildHtml(html):
       head:
         title: text rendered.genTitle appName
-        meta(name = "viewport", content = "width=device-width, -scale=1.0")
+        meta(charset = "UTF-8")
+        meta(name = "viewport", content = "width=device-width, initial-scale=1.0")
+        meta(http-equiv = "X-UA-Compatible", content = "ie=edge")
+
+        link(rel = "apple-touch-icon", sizes = "180x180", href = iconsDir / "apple-touch-icon.png")
+        link(rel = "icon", `type` = "image/png", sizes = "32x32", href = iconsDir / "favicon-32x32.png")
+        link(rel = "icon", `type` = "image/png", sizes = "16x16", href = iconsDir / "favicon-16x16.png")
+        link(rel = "manifest", href = webManifestFile)
       body:
         rendered.ssrvnodes.before
         tdiv(id = "ROOT"):

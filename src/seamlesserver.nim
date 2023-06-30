@@ -44,21 +44,21 @@ proc main =
       except:
         logging.info "Corrupted session"
       finally:
-        await switch(ctx)
+        await switch ctx
 
   if settings.debug:
     app.use debugRequestMiddleware()
   
   app.use @[
-    sessionMiddleware(settings),
-    staticFileMiddleware jsDir
+    sessionMw(),
+    staticFileMiddleware(jsDir, iconsDir)
   ]
 
-  app.addRoute allRoutes
+  app.addRoute serverRoutes
   for (code, renderer) in defaultRoutes:
     app.registerErrorHandler(code, renderer)
 
-  app.run()
+  run app
 
 when isMainModule:
   main()

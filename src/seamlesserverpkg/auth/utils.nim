@@ -15,5 +15,4 @@ proc loggedUser*(ctx): User =
 
 proc isLogged*(ctx): bool =
   ## Check if user is logged
-  echo "\l\l'" & ctx.session.getOrDefault(sess_username) & "' " & $ctx.session.getOrDefault(sess_username).len & "\l\l"
   ctx.session.getOrDefault(sess_username).len > 0

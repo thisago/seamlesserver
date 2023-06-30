@@ -1,5 +1,7 @@
 <div align=center>
 
+![](images/logo.png)
+
 # **SEAMLESSERVER**
 
 #### A web template that backend and frontend are seamless connected!
@@ -62,6 +64,10 @@ There's a simple [`User`][userDef] implementation with following fields:
 
 Registration and login are already implemented.
 
+### PWA implemented
+
+By default, this template is installable, and all SPA available routes are cached!
+
 ## How it Works
 
 ### Rendering
@@ -84,8 +90,8 @@ To run is extremely simple!
 $ nimble r # build and run, for development purposes
 ```
 
-The above command will compile the javascript, create `.env` if not exists,
-compile and run the server!
+The above command will compile the javascript, create `.env` and `public/` in
+`build/` if not exists, then compile and run the server!
 
 But if you want to compile and run just the server, just run:
 

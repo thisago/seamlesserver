@@ -24,15 +24,17 @@ requires "https://github.com/thisago/karax" # Single page applications for Nim. 
 
 # Tasks
 
-from std/os import `/`, commandLineParams
+from std/os import `/`, commandLineParams, walkDir, pcFile
 from std/strformat import fmt
 from std/hashes import hash
 
 let
   jsDir = binDir / "js"
-  jsFile = "main.js"
+  jsFile = "app.js"
   jsFilePath = jsDir / jsFile
   envFile = ".env"
+  publicDir = "public"
+  assetsDir = "assets"
 
   flags = fmt""
   jsFlags = fmt"-d:jsFile={jsFile} -o:{jsFilePath}"
@@ -45,10 +47,18 @@ proc minify =
 task buildServer, "Builds the server in development mode":
   exec fmt"nimble {flags} {serverFlags} build"
 
-task runServer, "Builds the server in debug and run it!":
+task setupFiles, "Create the missing files in `build/` dir": 
+  if not dirExists binDir:
+    mkDir binDir
   if not fileExists binDir / envFile:
-    echo fmt"Env not exists in '{binDir}' dir, using the template."
+    echo fmt"Env not exists in '{binDir}' dir, copying the template."
     cpFile envFile, binDir / envFile
+  if not dirExists binDir / assetsDir:
+    echo fmt"Assets dir not exists in '{binDir}' dir, merging public/ to build/."
+    exec fmt"cp -r {publicDir}/* {binDir}"
+
+task runServer, "Builds the server in debug and run it!":
+  setupFilesTask()
   exec fmt"clear && cd {binDir} && ./{bin[0]}"
 
 task buildServerRelease, "Compile the server in danger mode":
@@ -80,9 +90,20 @@ task compileAllRelease, "Builds the JS in background while building server; All 
   buildServerReleaseTask()
 
 task r, "Debug build all and run":
+  setupFilesTask()
   compileAllTask()
   runServerTask()
 
 task buildRunServer, "Debug build the server and run ir":
+  setupFilesTask()
   buildServerTask()
   runServerTask()
+
+task cleanBuild, "Deletes all files created by setup task":
+  cd binDir
+  for f in walkDir ".":
+    if f.path[2..^1] notin [bin[0], "js"]:
+      if f.kind == pcFile:
+        rmFile f.path
+      else:
+        rmDir f.path

@@ -2,8 +2,9 @@ import std/dom
 
 include pkg/karax/prelude
 
-import seamlesserverpkg/renderer/base
 import seamlesserverpkg/routes
+import seamlesserverpkg/renderer/base
+import seamlesserverpkg/js/serviceWorkerRegister
 import seamlesserverpkg/renderer/routes/default/notFound
 
 proc main =
@@ -23,7 +24,7 @@ proc main =
 
   proc renderer(data: RouterData): VNode =
     block renderPage:
-      for (path, renderHtmlPage) in allRoutes:
+      for (path, renderHtmlPage) in spaRoutes:
         if $window.location.pathname == path:
           result = render renderHtmlPage state
           break renderPage
