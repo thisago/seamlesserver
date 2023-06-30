@@ -6,7 +6,11 @@
 
 **[About](#about) - [Stack](#stack) - [Features](#features) - [How it Works](#how-it-works) - [Getting started](#getting-started)** - [License](#license)
 
+---
+> **Warning**
+> This project is't finished, the following screenshots are far away from the final version. Many features needs to be implemented and more tests need to be made.
 
+---
 <img width=250 title="Home - Logged in" src="screenshots/homeLoggedIn.png" />
 <img width=250 title="Home - Logged out" src="screenshots/homeLoggedOut.png" />
 <img width=250 title="Login" src="screenshots/login.png" />
@@ -61,7 +65,7 @@ The SPA will change the pages without reloading and the state will be preserved,
 To run is extremely simple!
 
 ```bash
-$ nimble r
+$ nimble r # build and run, for development purposes
 ```
 
 The above command will compile the javascript, create `.env` if not exists,
@@ -70,7 +74,20 @@ compile and run the server!
 But if you want to compile and run just the server, just run:
 
 ```bash
-$ nimble run_server
+$ nimble build_server # development build
+# or
+$ nimble build_server_release # production build
+
+# and
+$ nimble run_server # run it
+```
+
+Or if you want to compile just the Javascript, run:
+
+```bash
+$ nimble build_js # development build
+# or
+$ nimble build_js_release # production build
 ```
 
 ## License
