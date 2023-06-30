@@ -7,10 +7,12 @@
 **[About](#about) - [Stack](#stack) - [Features](#features) - [How it Works](#how-it-works) - [Getting started](#getting-started)** - [License](#license)
 
 ---
+
 > **Warning**
 > This project is't finished, the following screenshots are far away from the final version. Many features needs to be implemented and more tests need to be made.
 
 ---
+
 <img width=250 title="Home - Logged in" src="screenshots/homeLoggedIn.png" />
 <img width=250 title="Home - Logged out" src="screenshots/homeLoggedOut.png" />
 <img width=250 title="Login" src="screenshots/login.png" />
@@ -29,9 +31,10 @@ The page switching is made by Javascript, with `History.pushState`, so you can u
 
 This template is built in [Nim language][nimlang] using the following library and frameworks:
 
-- **Web Framework**: [Prologue](https://github.com/planety/prologue)
-- **ORM**: [Norm](https://github.com/moigagoo/norm)
-- **Backend HTML generation and SPA frontend framework**: [Karax][karax] ([fork used](https://github.com/thisago/karax))
+- **Web Framework**: [Prologue][prologue]
+- **ORM**: [Norm][norm]
+- **Auth Hashing**: [bcrypt][bcrypt]
+- **Backend HTML generation and SPA frontend framework**: [Karax][karaxFork] ([official repo][karax])
 
 ## Features
 
@@ -45,6 +48,19 @@ The server can send a JSON to frontend seamless.
 
 The server renders a HTML script tag with a JSON on it and the
 frontend reads it and deserialize to a [`BridgedData`][bridgedDataDef]
+
+### User authentication
+
+The user password is hashed using `bcrypt` hash, with a random salt for each user.
+
+### User registration and login
+
+There's a simple [`User`][userDef] implementation with following fields:
+- username
+- email
+- password
+
+Registration and login are already implemented.
 
 ## How it Works
 
@@ -98,6 +114,11 @@ This template is free and open source software licensed over MIT license.
 
 [nimlang]: https://nim-lang.org "Nim Language official website"
 [karax]: https://github.com/karaxnim/karax
+[karaxFork]: https://github.com/thisago/karax
 [bridgedDataDef]: ./src/seamlesserverpkg/renderer/base/bridgedData.nim#L7
 [stateDef]: ./src/seamlesserverpkg/renderer/base/state.nim#L4
 [renderedDef]: ./src/seamlesserverpkg/renderer/base/rendered.nim#L6
+[bcrypt]: https://github.com/nim-lang/checksums/blob/master/src/checksums/bcrypt.nim
+[prologue]: https://github.com/planety/prologue
+[norm]: https://github.com/moigagoo/norm
+[userDef]: ./src/seamlesserverpkg/db/models/user.nim#L10

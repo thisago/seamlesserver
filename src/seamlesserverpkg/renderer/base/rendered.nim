@@ -21,8 +21,8 @@ using
 when not defined js:
   func newSsrRendered*: SsrRendered =
     new result
-    result.after = buildHtml(tdiv): text "test"
-    result.before = buildHtml(tdiv): text "test"
+    new result.before
+    new result.after
 
 func newRendered*: Rendered =
   new result
