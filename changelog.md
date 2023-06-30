@@ -1,5 +1,12 @@
 # Changelog
 
+## Version alpha 0.0.6 (30/06/2023)
+
+- Implemented login POST
+- Removed debugging echoes
+- Added a option to disable the pushState in links using `dynamicLink` proc
+- Added a flash for logging out
+
 ## Version alpha 0.0.5 (29/06/2023)
 
 - Added password validation

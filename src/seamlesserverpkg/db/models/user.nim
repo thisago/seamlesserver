@@ -48,7 +48,7 @@ proc newUser*: User =
   ## Creates new blank user
   newUser("", "", "")
 
-proc get*(_: type User; email = ""; username = ""): User =
+proc get*(_: type User; email = ""; username = ""; operator = "or"): User =
   ## Get the user by email or username
   var
     keys: seq[string]
@@ -60,7 +60,7 @@ proc get*(_: type User; email = ""; username = ""): User =
     keys.add "username"
     values.add username
   if keys.len > 0:
-    result = User.get(keys, values)
+    result = User.get(keys, values, operator)
 
 proc add*(_: type User; username, email, password: string) =
   ## Add a new user to DB

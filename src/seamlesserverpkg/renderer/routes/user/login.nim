@@ -21,13 +21,15 @@ proc renderHtml*(state: State): Rendered =
     h1: text "Login page"
     form(`method` = "post"):
       input(
-        name = "username",
-        placeholder = "Username",
+        name = "usernameOrEmail",
+        placeholder = "Username or email",
+        value = "john2",
         `type` = "text"
       )
       input(
         name = "password",
         placeholder = "Password",
+        value = "johnDoe1234",
         `type` = "password"
       )
       button(`type` = "submit"): text "Submit"
@@ -40,7 +42,12 @@ proc renderHtml*(state: State): Rendered =
 when not defined js:
   import pkg/prologue
 
-  import seamlesserverpkg/auth/utils
+  from seamlesserverpkg/auth import isPasswordSame
+  from seamlesserverpkg/auth/utils import isLogged
+  from seamlesserverpkg/config import sess_username
+  from seamlesserverpkg/db/models/user import User, add, get
+  from seamlesserverpkg/userMessages import umAlreadyLoggedIn, umUserNotExists,
+                                              umWrongPassword, umLoginSuccess
 
   proc get*(ctx: Context) {.async.} =
     ## GET login page
@@ -50,3 +57,32 @@ when not defined js:
       resp redirect "/"
       return
     resp ctx.ssr renderHtml
+
+  proc post*(ctx: Context) {.async.} =
+    ## POST login page
+    doAssert ctx.request.reqMethod == HttpPost
+
+    block loggingIn:
+      if ctx.isLogged:
+        ctx.flash(umAlreadyLoggedIn, Error)
+        break loggingIn
+
+      let
+        userOrMail = ctx.getPostParams "usernameOrEmail"
+        pass = ctx.getPostParams "password"
+      
+      let u = User.get(username = userOrMail, email = userOrMail)
+      if u.isNil:
+        ctx.flash(umUserNotExists, Error)
+        break loggingIn
+      echo u[]
+      
+      if not pass.isPasswordSame(u.password, u.salt):
+        ctx.flash(umWrongPassword, Error)
+        break loggingIn
+    
+      ctx.session[sess_username] = u.username
+
+      ctx.flash(umLoginSuccess, Info)
+      resp redirect "/"
+    resp redirect path

@@ -12,6 +12,7 @@ when not defined js:
     allRoutes* = [
       pattern(home.path, home.get, HttpGet),
       pattern(login.path, login.get, HttpGet),
+      pattern(login.path, login.post, HttpPost),
       pattern(register.path, register.get, HttpGet),
       pattern(register.path, register.post, HttpPost),
       pattern(logout.path, logout.get, HttpGet),

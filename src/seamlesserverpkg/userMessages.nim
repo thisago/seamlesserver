@@ -9,3 +9,7 @@ const
     ## Unknown register error 
   umAlreadyLoggedIn* = "You already logged in"
   umErrorParseBridgedData* = "Error to parse the server's data: '$#'"
+  umUserNotExists* = "User not exists"
+  umWrongPassword* = "The password is incorrect"
+  umLoginSuccess* = "Successfully logged in!"
+  umLoggedOut* = "You logged out. See soon!"

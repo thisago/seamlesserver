@@ -58,7 +58,7 @@ task buildServerRelease, "Compile the server in danger mode":
 task buildJs, "Compile Javascript":
   let bg = commandLineParams()[^1] == "background"
   exec fmt"nim js {flags} {jsFlags} src/frontend" & (
-    bg: " &" else: ""
+    if bg: " &" else: ""
   )
   if not bg: minify()
 

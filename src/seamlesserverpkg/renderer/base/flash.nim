@@ -46,7 +46,6 @@ when defined js:
 
   proc autoDeleteFlashes*(mflashes) =
     ## Automatically delete the flashes after they expire
-    echo mflashes
     for flash in mflashes.mitems:
       if not flash.deleting:
         flash.deleting = true

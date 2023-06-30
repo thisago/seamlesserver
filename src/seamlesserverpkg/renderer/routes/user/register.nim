@@ -74,6 +74,7 @@ when not defined js:
     ## GET register page
     doAssert ctx.request.reqMethod == HttpGet
     if ctx.isLogged:
+      ctx.flash(umAlreadyLoggedIn, Warning)
       resp redirect "/"
       return
     resp ctx.ssr renderHtml
@@ -105,7 +106,6 @@ when not defined js:
       block checkIfExists:
         let u = User.get(username = user, email = mail)
         if not u.isNil:
-          echo u.email, " == ", mail
           if u.username == user:
             ctx.flash(umUserExists, Error)
           elif u.email == mail:
@@ -127,4 +127,5 @@ when not defined js:
 
       ctx.session[sess_username] = user
       ctx.flash(umRegisterSuccess, Info)
+      resp redirect "/"
     resp redirect path
