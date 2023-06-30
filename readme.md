@@ -9,7 +9,7 @@
 ---
 
 > **Warning**
-> This project is't finished, the following screenshots are far away from the final version. Many features needs to be implemented and more tests need to be made.
+> This project isn't finished, the following screenshots are far away from the final version. Many features needs to be implemented and more tests need to be made.
 
 ---
 
