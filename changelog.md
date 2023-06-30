@@ -6,6 +6,7 @@
 - Removed debugging echoes
 - Added a option to disable the pushState in links using `dynamicLink` proc
 - Added a flash for logging out
+- Hide login and register link from header when logged in
 
 ## Version alpha 0.0.5 (29/06/2023)
 

@@ -10,10 +10,11 @@ proc renderHeader*(state: State): VNode =
     ul(class = "nav"):
       li: dynamicLink(href = "/"):
         text "Home"
-      li: dynamicLink(href = "/user/login"):
-        text "Login"
-      li: dynamicLink(href = "/user/register"):
-        text "Register"
       if state.brData.isLogged:
         li: dynamicLink(href = "/user/logout", inSpa = false):
           text "Logout"
+      else:
+        li: dynamicLink(href = "/user/login"):
+          text "Login"
+        li: dynamicLink(href = "/user/register"):
+          text "Register"
