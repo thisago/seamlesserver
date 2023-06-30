@@ -8,6 +8,11 @@
 
 </div>
 
+<img width=200 title="Home - Logged in" src="screenshots/homeLoggedIn.png" />
+<img width=200 title="Home - Logged out" src="screenshots/homeLoggedOut.png" />
+<img width=200 title="Login" src="screenshots/login.png" />
+<img width=200 title="Register" src="screenshots/register.png" />
+
 ## About
 
 This template implements a basic fullstack system seamless connected between backend and frontend.
