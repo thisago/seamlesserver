@@ -1,6 +1,5 @@
 <div align=center>
-
-![](images/logo.png)
+<img alt="Seamlesserver Logo" src="images/logo.png" width="200">
 
 # **SEAMLESSERVER**
 
