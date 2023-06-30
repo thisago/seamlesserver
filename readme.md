@@ -6,12 +6,12 @@
 
 **[About](#about) - [Stack](#stack) - [Features](#features) - [How it Works](#how-it-works) - [Getting started](#getting-started)** - [License](#license)
 
-</div>
 
-<img width=400 title="Home - Logged in" src="screenshots/homeLoggedIn.png" />
-<img width=400 title="Home - Logged out" src="screenshots/homeLoggedOut.png" />
-<img width=400 title="Login" src="screenshots/login.png" />
-<img width=400 title="Register" src="screenshots/register.png" />
+<img width=250 title="Home - Logged in" src="screenshots/homeLoggedIn.png" />
+<img width=250 title="Home - Logged out" src="screenshots/homeLoggedOut.png" />
+<img width=250 title="Login" src="screenshots/login.png" />
+<img width=250 title="Register" src="screenshots/register.png" />
+</div>
 
 ## About
 
