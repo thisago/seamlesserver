@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.0.5"
+version       = "0.0.7"
 author        = "Thiago Navarro"
 description   = "A web template that backend and frontend are seamless connected!"
 license       = "MIT"

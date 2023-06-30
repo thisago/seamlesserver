@@ -1,5 +1,9 @@
 # Changelog
 
+## Version alpha 0.0.7 (30/06/2023)
+
+- Removed "test" text in ssr before and after nodes
+
 ## Version alpha 0.0.6 (30/06/2023)
 
 - Implemented login POST
