@@ -10,6 +10,8 @@
 - Added PWA support (Oh, took a lot of time...)
 - Added favicons
 - Added missing files ignored by `.gitignore`
+- Implemented service worker register in Nim
+- Added creation date info in user
 
 ## Version alpha 0.0.6 (30/06/2023)
 
