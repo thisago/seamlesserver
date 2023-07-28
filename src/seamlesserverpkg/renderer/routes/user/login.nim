@@ -1,7 +1,6 @@
-include pkg/karax/prelude
+from seamlesserverpkg/userMessages import umAlreadyLoggedIn
 
 import seamlesserverpkg/renderer/base
-from seamlesserverpkg/userMessages import umAlreadyLoggedIn
 import seamlesserverpkg/renderer/base/flash
 
 when defined js:

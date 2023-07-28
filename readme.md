@@ -35,7 +35,7 @@ This template is built in [Nim language][nimlang] using the following library an
 - **Web Framework**: [Prologue][prologue]
 - **ORM**: [Norm][norm]
 - **Auth Hashing**: [bcrypt][bcrypt]
-- **Backend HTML generation and SPA frontend framework**: [Karax][karaxFork] ([official repo][karax])
+- **Backend HTML generation and SPA frontend framework**: [Karax][karax]
 
 ## Features
 
@@ -57,6 +57,7 @@ The user password is hashed using `bcrypt` hash, with a random salt for each use
 ### User registration and login
 
 There's a simple [`User`][userDef] implementation with following fields:
+
 - username
 - email
 - password
@@ -119,7 +120,6 @@ This template is free and open source software licensed over MIT license.
 
 [nimlang]: https://nim-lang.org "Nim Language official website"
 [karax]: https://github.com/karaxnim/karax
-[karaxFork]: https://github.com/thisago/karax
 [bridgedDataDef]: ./src/seamlesserverpkg/renderer/base/bridgedData.nim#L7
 [stateDef]: ./src/seamlesserverpkg/renderer/base/state.nim#L4
 [renderedDef]: ./src/seamlesserverpkg/renderer/base/rendered.nim#L6

@@ -1,4 +1,12 @@
-include pkg/karax/prelude
+when defined js:
+  import kbase, karax, karaxdsl, vdom, compact, jstrutils # prelude
+  export kbase, karax, karaxdsl, vdom, compact, jstrutils
+else:
+  import pkg/karax/[
+    karaxdsl,
+    vdom,
+  ]
+  export karaxdsl, vdom
 
 import seamlesserverpkg/renderer/base/[
   header,

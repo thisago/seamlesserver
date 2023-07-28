@@ -1,6 +1,10 @@
 # Changelog
 
-## Version alpha 0.0.7 (30/06/2023)
+## Version alpha 0.8.0 (28/07/2023)
+
+- Adapted to official Karax version
+
+## Version alpha 0.7.0 (30/06/2023)
 
 - Removed "test" text in SSR before and after nodes
 - Added State persistance in localStorage
@@ -13,7 +17,7 @@
 - Implemented service worker register in Nim
 - Added creation date info in user
 
-## Version alpha 0.0.6 (30/06/2023)
+## Version alpha 0.6.0 (30/06/2023)
 
 - Implemented login POST
 - Removed debugging echoes
@@ -21,7 +25,7 @@
 - Added a flash for logging out
 - Hide login and register link from header when logged in
 
-## Version alpha 0.0.5 (29/06/2023)
+## Version alpha 0.5.0 (29/06/2023)
 
 - Added password validation
 - Fixed email regex validator
@@ -36,7 +40,7 @@
 - Added logout route
 - Fixed flash auto deleting
 
-## Version alpha 0.0.4 (29/06/2023)
+## Version alpha 0.4.0 (29/06/2023)
 
 - Added `Model.getAll` DB query function
 - Added register form
@@ -49,7 +53,7 @@
 - Fixed 404 error page code
 - Removed `State.errors` and replaced it by `BridgedData.flashes`
 
-## Version alpha 0.0.3 (27/06/2023)
+## Version alpha 0.3.0 (27/06/2023)
 
 - Removed debug middleware when not in debug mode
 - Added configurable JS filename
@@ -58,7 +62,7 @@
 - Added links to header
 - Added login form HTML
 
-## Version alpha 0.0.2 (27/06/2023)
+## Version alpha 0.2.0 (27/06/2023)
 
 - Added SPA routing without reloading
 - Added "flash" errors
@@ -70,7 +74,7 @@
 - Moved the BridgedData, Errors, Rendered and State to their own module
 - Server side renderer now receives the renderer function, to run it with a blank State.
 
-## Version alpha 0.0.1 (26/06/2023)
+## Version alpha 0.1.0 (26/06/2023)
 
 - Added user DB model
 - Added auth hashing

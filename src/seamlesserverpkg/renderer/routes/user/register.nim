@@ -1,17 +1,10 @@
-import pkg/karax/[
-  # kbase,
-  vdom,
-  # karax,
-  karaxdsl,
-]
-
 import seamlesserverpkg/renderer/base
 
 from seamlesserverpkg/validation/username import nil
 from seamlesserverpkg/validation/email import nil
 from seamlesserverpkg/validation/password import nil
-
 from seamlesserverpkg/userMessages import umAlreadyLoggedIn
+
 import seamlesserverpkg/renderer/base/flash
 
 when defined js:
@@ -65,8 +58,7 @@ when not defined js:
   from seamlesserverpkg/config import sess_username
   from seamlesserverpkg/db/models/user import User, add, get
   from seamlesserverpkg/userMessages import umInvalidEmail, umInvalidPassword,
-                                            umInvalidUsername,
-                                                umRegisterSuccess,
+                                            umInvalidUsername, umRegisterSuccess,
                                             umUserExists, umEmailExists,
                                             umRegisterError
 

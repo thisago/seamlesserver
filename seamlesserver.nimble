@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.0.7"
+version       = "0.8.0"
 author        = "Thiago Navarro"
 description   = "A web template that backend and frontend are seamless connected!"
 license       = "MIT"
@@ -17,10 +17,9 @@ requires "checksums" # Hash algorithms in Nim
 
 requires "prologue" # Powerful and flexible web framework written in Nim
 requires "norm" # A Nim ORM for SQLite and Postgres
-# requires "hmac" # HMAC-SHA1 and HMAC-MD5 hashing in Nim
 
 # Backend and frontend
-requires "https://github.com/thisago/karax" # Single page applications for Nim. This fork makes this project possible :D
+requires "karax" # Karax. Single page applications for Nim. 
 
 # Tasks
 

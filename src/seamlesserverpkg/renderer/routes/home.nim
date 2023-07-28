@@ -1,17 +1,15 @@
 when not defined js:
-  import pkg/prologue
-  import seamlesserverpkg/auth/utils
+  # TODO: specify the imported symbols
+  import std/json
+  import std/jsonutils
 
-  import std/json, std/jsonutils
+  import seamlesserverpkg/auth/utils
   import seamlesserverpkg/db
   import seamlesserverpkg/db/models/user
-
   import seamlesserverpkg/auth/utils
 
 else:
   from std/dom import window, reload
-
-include pkg/karax/prelude
 
 import seamlesserverpkg/renderer/base
 
@@ -36,6 +34,8 @@ proc renderHtml*(state: State): Rendered =
 
 
 when not defined js:
+  import pkg/prologue except appName
+
   proc get*(ctx: Context) {.async.} =
     ## GET login page
     doAssert ctx.request.reqMethod == HttpGet
