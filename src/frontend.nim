@@ -33,7 +33,7 @@ proc main =
     save state
 
   setRenderer renderer
-  
+
   # TODO: Mutation observer of location.pathname
 
 when isMainModule:

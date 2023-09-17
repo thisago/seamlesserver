@@ -1,6 +1,6 @@
 from std/times import getTime, toUnix
 
-include pkg/karax/prelude
+import pkg/karax/[karaxdsl, vdom]
 
 import seamlesserverpkg/renderer/base/bridgedData
 
@@ -42,6 +42,7 @@ proc del*(mflashes; text: string; all = false): bool =
         break
     inc i
 when defined js:
+  from pkg/karax/karax import redraw
   from std/dom import setTimeout
 
   proc autoDeleteFlashes*(mflashes) =

@@ -1,4 +1,5 @@
-include pkg/karax/prelude
+import pkg/karax/[karaxdsl, vdom]
+
 from pkg/prologue/core/types import FlashLevel
 export FlashLevel
 
@@ -10,17 +11,17 @@ type
     level*: FlashLevel
     text*: string
     createdAt*: int64 ## unix time
-    duration*: int ## ms
+    duration*: int    ## ms
     deleting*: bool
   BridgedData* = ref object
-    ## The data sent by backend to frontend;  
+    ## The data sent by backend to frontend;
     ## Needs to be able to serialize and deserialize in JSON
     appName*: string
     flashes*: seq[FlashMessage]
     devData*: string
     isLogged*: bool
 
-const brDataDomJsonId* {.strdefine.} = kstring "bridgedData" # Needs to be the
+const brDataDomJsonId* {.strdefine.} = "bridgedData" # Needs to be the
                                                              # same at each
                                                              # compilation
 
@@ -47,7 +48,7 @@ else:
   from std/json import parseJson, to
   from std/dom import document, getElementById, remove
   from std/strutils import `%`
-  
+
   import seamlesserverpkg/renderer/base/flash
   from seamlesserverpkg/userMessages import umErrorParseBridgedData
 

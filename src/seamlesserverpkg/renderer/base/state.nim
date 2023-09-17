@@ -44,4 +44,3 @@ when defined js:
         mself = jsonState.`$`.parseJson.to State
       except:
         discard
-        

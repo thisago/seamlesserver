@@ -1,4 +1,4 @@
-include pkg/karax/prelude
+import seamlesserverpkg/renderer/base
 
 import seamlesserverpkg/renderer/base
 

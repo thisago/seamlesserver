@@ -1,11 +1,8 @@
 when defined js:
-  import kbase, karax, karaxdsl, vdom, compact, jstrutils # prelude
+  import pkg/karax/[kbase, karax, karaxdsl, vdom, compact, jstrutils] # prelude
   export kbase, karax, karaxdsl, vdom, compact, jstrutils
 else:
-  import pkg/karax/[
-    karaxdsl,
-    vdom,
-  ]
+  import pkg/karax/[karaxdsl, vdom]
   export karaxdsl, vdom
 
 import seamlesserverpkg/renderer/base/[

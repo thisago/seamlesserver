@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.8.0"
+version       = "0.9.0"
 author        = "Thiago Navarro"
 description   = "A web template that backend and frontend are seamless connected!"
 license       = "MIT"
@@ -10,10 +10,11 @@ binDir = "build"
 
 # Dependencies
 
-requires "nim >= 1.9.5"
+requires "nim >= 1.6.4"
 
 # backend
 requires "checksums" # Hash algorithms in Nim
+requires "db_connector" # Database connection
 
 requires "prologue" # Powerful and flexible web framework written in Nim
 requires "norm" # A Nim ORM for SQLite and Postgres

@@ -1,4 +1,4 @@
-include pkg/karax/prelude
+import pkg/karax/[karaxdsl, vdom]
 
 import seamlesserverpkg/renderer/base/state
 

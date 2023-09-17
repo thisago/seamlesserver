@@ -68,16 +68,16 @@ when not defined js:
       let
         userOrMail = ctx.getPostParams "usernameOrEmail"
         pass = ctx.getPostParams "password"
-      
+
       let u = User.get(username = userOrMail, email = userOrMail)
       if u.isNil:
         ctx.flash(umUserNotExists, Error)
         break loggingIn
-      
+
       if not pass.isPasswordSame(u.password, u.salt):
         ctx.flash(umWrongPassword, Error)
         break loggingIn
-    
+
       ctx.session[sess_username] = u.username
 
       ctx.flash(umLoginSuccess, Info)

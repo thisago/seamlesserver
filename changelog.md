@@ -1,5 +1,11 @@
 # Changelog
 
+## Version alpha 0.9.0 (17/09/2023)
+
+- Fixed compilation issues
+  - Wrong JS karax submodules importing in server
+  - Added `db_connector` dependency
+
 ## Version alpha 0.8.0 (28/07/2023)
 
 - Adapted to official Karax version
