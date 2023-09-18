@@ -39,7 +39,7 @@ This template is built in [Nim language][nimlang] using the following library an
 
 ### Insanely fast
 
-After first load, the pages loads instantly with Karax
+After first load, the pages changes instantly with Karax
 
 ### Just one HTML model, for frontend and backend
 
