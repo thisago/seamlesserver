@@ -1,12 +1,11 @@
 when not defined js:
   # TODO: specify the imported symbols
-  import std/json
-  import std/jsonutils
+  import seamlesserverpkg/auth/utils
+  import seamlesserverpkg/auth/utils
 
-  import seamlesserverpkg/auth/utils
-  import seamlesserverpkg/db
-  import seamlesserverpkg/db/models/user
-  import seamlesserverpkg/auth/utils
+  # test
+  from seamlesserverpkg/db import count
+  from seamlesserverpkg/db/models/user import User
 
 else:
   from std/dom import window, reload
@@ -19,14 +18,14 @@ proc renderHtml*(state: State): Rendered =
   ## Home page HTML multi-backend renderer
   result = newRendered()
   when not defined js:
-    state.brData.devData = pretty toJson User.getAll()
+    state.brData.devData = $count User
   else:
     if state.brData.devData.len == 0:
       window.location.reload()
   result.title = "Home"
   result.vnode = buildHtml(main):
     h1: text "homepage"
-    pre: blockquote: text state.brData.devData
+    p: text "users in database: " & state.brData.devData
     h2: text (if state.brData.isLogged: "logged in" else: "not logged in")
   when not defined js:
     result.ssrvnodes.after = buildHtml(tdiv):

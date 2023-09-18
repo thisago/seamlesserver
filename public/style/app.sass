@@ -1,0 +1,29 @@
+@use "include/flash"
+@use "include/header"
+@use "include/main"
+
+*
+  box-sizing: border-box
+  outline: 0
+  margin: 0
+  padding: 0
+  -webkit-tap-highlight-color: transparent
+  text-decoration: none
+  font-family: sans-serif
+
+body
+  width: 100%
+  min-height: 100vh
+  min-height: -webkit-fill-available
+
+#ROOT
+  display: flex
+  flex-direction: column
+  min-height: 100%
+
+  footer, header
+    display: flex
+    flex-direction: row
+    padding: 1em .5em
+    background: #00000010
+    width: 100%

@@ -1,7 +1,7 @@
 when defined js:
   from std/dom import preventDefault
 
-  import pkg/karax/[kbase, karax, karaxdsl, vdom, compact, jstrutils] # prelude
+  import pkg/karax/[karax, karaxdsl, vdom]
 
   from seamlesserverpkg/js/utils import redirect
 else:

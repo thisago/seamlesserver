@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.9.0"
+version       = "0.10.0"
 author        = "Thiago Navarro"
 description   = "A web template that backend and frontend are seamless connected!"
 license       = "MIT"
@@ -20,7 +20,8 @@ requires "prologue" # Powerful and flexible web framework written in Nim
 requires "norm" # A Nim ORM for SQLite and Postgres
 
 # Backend and frontend
-requires "karax" # Karax. Single page applications for Nim. 
+requires "karax" # Karax. Single page applications for Nim.
+
 
 # Tasks
 
@@ -28,26 +29,40 @@ from std/os import `/`, commandLineParams, walkDir, pcFile
 from std/strformat import fmt
 from std/hashes import hash
 
+from src/seamlesserverpkg/config import styleDir, mainCssFile, mainSassFile,
+                                          jsDir, jsFile
+
 let
-  jsDir = binDir / "js"
-  jsFile = "app.js"
+  jsDir = binDir / jsDir
   jsFilePath = jsDir / jsFile
   envFile = ".env"
   publicDir = "public"
   assetsDir = "assets"
+  cssFile = styleDir / mainCssFile
+  sassFile = styleDir / mainSassFile
 
-  flags = fmt""
   jsFlags = fmt"-d:jsFile={jsFile} -o:{jsFilePath}"
-  serverFlags = "--mm:orc --deepcopy:on --define:lto -d:ssl"
   releaseFlags = "-d:danger --opt:speed"
 
-proc minify =
-  exec fmt"uglifyjs -o {jsFilePath} {jsFilePath}"
+proc existsOrCreateDir(d: string): bool =
+  result = true # exists
+  if not dirExists d:
+    result = false
+    mkDir d
 
 task buildServer, "Builds the server in development mode":
-  exec fmt"nimble {flags} {serverFlags} build"
+  exec fmt"nimble build"
 
-task setupFiles, "Create the missing files in `build/` dir": 
+task buildCss, "Builds Sass and add it to `build/`":
+  if existsOrCreateDir binDir / styleDir:
+    rmFile binDir / cssFile
+  exec fmt"sass --no-source-map {publicDir / sassFile} {binDir / cssFile}"
+
+task setupCssDev, "Symlink compiled CSS from public/ to build/ to allow easy development":
+  rmFile binDir / cssFile
+  exec fmt"ln -s $(readlink -f {publicDir / cssFile}) {binDir / cssFile}"
+
+task setupFiles, "Create the missing files in `build/` dir":
   if not dirExists binDir:
     mkDir binDir
   if not fileExists binDir / envFile:
@@ -62,19 +77,18 @@ task runServer, "Builds the server in debug and run it!":
   exec fmt"clear && cd {binDir} && ./{bin[0]}"
 
 task buildServerRelease, "Compile the server in danger mode":
-  exec fmt"nimble {flags} {serverFlags} {releaseFlags} build"
+  exec fmt"nimble {releaseFlags} build"
   exec "strip " & binDir / bin[0]
 
 task buildJs, "Compile Javascript":
-  let bg = commandLineParams()[^1] == "background"
-  exec fmt"nim js {flags} {jsFlags} src/frontend" & (
-    if bg: " &" else: ""
-  )
-  if not bg: minify()
+  exec fmt"nim js {jsFlags} src/frontend"
+
+task minifyJs, "Uglify js":
+  exec fmt"uglifyjs -o {jsFilePath} {jsFilePath}"
 
 task buildJsRelease, "Compile Javascript in danger mode":
   exec fmt"nim js -d:danger -o:{jsFilePath} src/frontend"
-  minify()
+  minifyJsTask()
 
 task genDocs, "Generate documentation":
   exec "rm -r docs;" &
@@ -82,15 +96,18 @@ task genDocs, "Generate documentation":
        "nim doc -d:usestd --git.commit:master --project -d:ssl --out:docs ./src/frontend.nim"
 
 task compileAll, "Builds the JS in background while building server":
-  exec "nimble build_js background"
+  exec "nimble build_js &"
   buildServerTask()
 
 task compileAllRelease, "Builds the JS in background while building server; All in release mode":
-  exec "nimble build_js_release background"
+  exec "nimble build_js_release &"
   buildServerReleaseTask()
+  setupFilesTask()
+  buildCssTask()
 
 task r, "Debug build all and run":
   setupFilesTask()
+  setupCssDevTask()
   compileAllTask()
   runServerTask()
 
@@ -102,7 +119,7 @@ task buildRunServer, "Debug build the server and run ir":
 task cleanBuild, "Deletes all files created by setup task":
   cd binDir
   for f in walkDir ".":
-    if f.path[2..^1] notin [bin[0], "js"]:
+    if f.path[2..^1] notin [bin[0], jsDir]:
       if f.kind == pcFile:
         rmFile f.path
       else:

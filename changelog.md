@@ -1,5 +1,19 @@
 # Changelog
 
+## Version alpha 0.10.0 (17/09/2023)
+
+- Fixed app name
+- Added styling
+- Added Sass compilation task
+- Added compiled Sass linking task to development purposes
+- Fixed some tasks
+- Added DOCTYPE tag in server side HTML
+- Fixed HTML includes url to absolute path
+- Moved assetsDir and jsDir definition from .env to compile time
+- Fixed sw.js route
+- Session is now httpOnly
+- 404 page now generate a main element
+
 ## Version alpha 0.9.0 (17/09/2023)
 
 - Fixed compilation issues

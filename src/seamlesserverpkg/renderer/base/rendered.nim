@@ -13,7 +13,7 @@ type
     vnode*: VNode
     title*: string
     when not defined js:
-      ssrvnodes*: SsrRendered
+      ssrvnodes*: SsrRendered # Server Side Rendered VNodes
 
 using
   self: Rendered

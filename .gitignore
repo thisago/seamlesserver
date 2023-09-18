@@ -2,3 +2,4 @@ build/
 docs/
 *.log
 js/app.js
+public/style/app.css

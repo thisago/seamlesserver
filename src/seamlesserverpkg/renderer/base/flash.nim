@@ -1,4 +1,5 @@
 from std/times import getTime, toUnix
+from std/strformat import fmt
 
 import pkg/karax/[karaxdsl, vdom]
 
@@ -12,7 +13,7 @@ proc renderFlashes*(flashes): VNode =
   ## Renders all flashes into a `div`
   buildHtml(tdiv(class = "flashes")):
     for flash in flashes:
-      tdiv(class = $flash.level):
+      tdiv(class = fmt"flash {flash.level}"):
         text flash.text
 
 proc flash*(

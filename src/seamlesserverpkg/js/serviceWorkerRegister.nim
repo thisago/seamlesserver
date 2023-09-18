@@ -10,4 +10,3 @@ try:
   navigator.serviceWorker.register serviceWorkerFile
 except:
   echo getCurrentExceptionMsg()
-  discard

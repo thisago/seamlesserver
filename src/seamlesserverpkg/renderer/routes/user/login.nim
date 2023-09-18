@@ -81,7 +81,7 @@ when not defined js:
       ctx.session[sess_username] = u.username
 
       ctx.flash(umLoginSuccess, Info)
-      resp redirect "/"
+      resp redirect("/", Http302)
       return
     await ctx.get
     ctx.response.code = Http401

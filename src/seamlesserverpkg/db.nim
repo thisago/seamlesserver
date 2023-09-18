@@ -79,3 +79,10 @@ proc getAll*[T: ref object](table: typedesc[T]): seq[T] =
     inDb: dbConn.selectAll result
   except:
     result.del 0
+
+proc count*[T: ref object](table: typedesc[T]): int =
+  ## Returns how much rows in table
+  try:
+    inDb: result = dbConn.count table
+  except:
+    result = -1

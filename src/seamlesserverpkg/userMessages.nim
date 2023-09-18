@@ -6,7 +6,7 @@ const
   umUserExists* = "Username was already taken."
   umEmailExists* = "Email was already used."
   umRegisterError* = "An error occurred, if it persists, please contact an admin."
-    ## Unknown register error 
+    ## Unknown register error
   umAlreadyLoggedIn* = "You already logged in"
   umErrorParseBridgedData* = "Error to parse the server's data: '$#'"
   umUserNotExists* = "User not exists"

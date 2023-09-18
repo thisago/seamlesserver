@@ -37,7 +37,8 @@ proc main =
   proc sessionMw: HandlerAsync =
     ## This is a tricky way to prevent error showing to client if session
     ## was corrupted
-    let mw = sessionMiddleware(settings)
+    let mw = sessionMiddleware(settings, httpOnly = true, path = "")
+
     result = proc(ctx: Context) {.async.} =
       try:
         await mw ctx
@@ -48,10 +49,10 @@ proc main =
 
   if settings.debug:
     app.use debugRequestMiddleware()
-  
+
   app.use @[
     sessionMw(),
-    staticFileMiddleware(jsDir, iconsDir)
+    staticFileMiddleware(jsDir, iconsDir, styleDir)
   ]
 
   app.addRoute serverRoutes

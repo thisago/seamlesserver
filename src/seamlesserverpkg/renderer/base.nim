@@ -25,7 +25,8 @@ when not defined js:
   import pkg/prologue except appName
 
   from seamlesserverpkg/config import withConf, appName, jsDir, iconsDir, jsFile,
-                                        assetsDir, webManifestFile
+                                        assetsDir, webManifestFile, styleDir,
+                                        mainCssFile
   from seamlesserverpkg/auth/utils import isLogged
 
   type Render = proc(state: State): Rendered
@@ -35,7 +36,9 @@ when not defined js:
     var state = ctx.newState
     for flash in ctx.getFlashedMsgsWithCategory():
       state.brData.flash(flash[1], parseEnum[FlashLevel](flash[0]))
+    # test
     state.brData.flash("Hellow from server! this message will disappear after 2s", Info, 2000)
+
     state.brData.isLogged = ctx.isLogged
     withConf:
       let rendered = render state
@@ -51,10 +54,14 @@ when not defined js:
         meta(name = "viewport", content = "width=device-width, initial-scale=1.0")
         meta(http-equiv = "X-UA-Compatible", content = "ie=edge")
 
-        link(rel = "apple-touch-icon", sizes = "180x180", href = iconsDir / "apple-touch-icon.png")
-        link(rel = "icon", `type` = "image/png", sizes = "32x32", href = iconsDir / "favicon-32x32.png")
-        link(rel = "icon", `type` = "image/png", sizes = "16x16", href = iconsDir / "favicon-16x16.png")
-        link(rel = "manifest", href = webManifestFile)
+        link(rel = "stylesheet", href = "/" & styleDir / mainCssFile)
+
+        # TODO: Move icon filenames to config
+        link(rel = "apple-touch-icon", sizes = "180x180", href = "/" & iconsDir / "apple-touch-icon.png")
+        link(rel = "icon", `type` = "image/png", sizes = "32x32", href = "/" & iconsDir / "favicon-32x32.png")
+        link(rel = "icon", `type` = "image/png", sizes = "16x16", href = "/" & iconsDir / "favicon-16x16.png")
+
+        link(rel = "manifest", href = "/" & webManifestFile)
       body:
         rendered.ssrvnodes.before
         tdiv(id = "ROOT"):
@@ -65,4 +72,4 @@ when not defined js:
         rendered.ssrvnodes.after
         genBridgedData state.brData
         script(src = "/" & jsDir / jsFile)
-    result = $vnode
+    result = "<!doctype html>\l" & $vnode
