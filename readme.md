@@ -27,16 +27,19 @@ The backend renders the **exactly** same page as backend, using same model!
 
 The page switching is made by Javascript, with `History.pushState`, so you can use the whole site without Javascript or browse with the speed of a SPA website
 
-## Stack
+## Stack (ProNoK?)
 
 This template is built in [Nim language][nimlang] using the following library and frameworks:
 
 - **Web Framework**: [Prologue][prologue]
 - **ORM**: [Norm][norm]
-- **Auth Hashing**: [bcrypt][bcrypt]
 - **Backend HTML generation and SPA frontend framework**: [Karax][karax]
 
 ## Features
+
+### Insanely fast
+
+After first load, the pages loads instantly with Karax
 
 ### Just one HTML model, for frontend and backend
 
