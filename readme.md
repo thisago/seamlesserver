@@ -23,9 +23,9 @@
 
 This template implements a basic fullstack system seamless connected between backend and frontend.
 
-The backend renders the **exactly** same page as backend, using same model!
+The backend renders the **exactly** same page as backend, using **exactly** same model!
 
-The page switching is made by Javascript, with `History.pushState`, so you can use the whole site without Javascript or browse with the speed of a SPA website
+The page switching is made by Javascript, changing url adding to history with `history.pushState`. So you can browse with the speed of a SPA website or you can use the whole site without Javascript, thanks to SSR.
 
 ## Stack (ProNoK?)
 
@@ -41,20 +41,15 @@ This template is built in [Nim language][nimlang] using the following library an
 
 After first load, the pages changes instantly with Karax
 
-### Just one HTML model, for frontend and backend
+### Just one page model
 
-You can pre-render SPA pages in the server side
+You can pre-render the pages in the server side and re-render the same model at browser with Javascript as a SPA!
 
 ### Bridged data
 
-The server can send a JSON to frontend seamless.
+The server sends to frontend a [`BridgedData`][bridgedDataDef] serialized as JSON and Javascript re-serialize it back to be ready to use.
 
-The server renders a HTML script tag with a JSON on it and the
-frontend reads it and deserialize to a [`BridgedData`][bridgedDataDef]
 
-### User authentication
-
-The user password is hashed using `bcrypt` hash, with a random salt for each user.
 
 ### User registration and login
 
@@ -64,9 +59,9 @@ There's a simple [`User`][userDef] implementation with following fields:
 - email
 - password
 
-Registration and login are already implemented.
+The user password is hashed using `bcrypt` hash, with a random salt for each user.
 
-### PWA implemented
+### PWA
 
 By default, this template is installable, and all SPA available routes are cached!
 
@@ -76,7 +71,7 @@ By default, this template is installable, and all SPA available routes are cache
 
 The HTML rendering models are defined at [seamlesserverpkg/renderer/routes](src/seamlesserverpkg/renderer/routes), everything is reused, even states objects are shared!
 
-The renderer receives a reference to a [`State`][stateDef], it contains a instance of [`BridgedData`][bridgedDataDef] and a list of errors (like NodeJS flash messages). It returns an [`Rendered`][renderedDef], an object that contains the rendered `VNode` and the page title.
+The renderer receives a reference to a [`State`][stateDef], it contains a instance of [`BridgedData`][bridgedDataDef] and a list of errors (flash messages). It returns an [`Rendered`][renderedDef], an object that contains the rendered `VNode` and the page title.
 
 The server renders the page with a blank state, since it's on server side.
 
