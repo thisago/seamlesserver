@@ -157,5 +157,4 @@ task renameProject, "Since this project is a template, this task renames all fil
       f = filePath.splitFile
     let ext = if f.ext.len > 0: f.ext else: f.name
     if ext.len > 1 and ext[1..^1] in ["nim", "nimble", "nims", "md", ".gitignore", "env"]:
-      echo ext
       renameFile filePath
