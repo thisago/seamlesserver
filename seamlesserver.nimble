@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.10.0"
+version       = "0.11.0"
 author        = "Thiago Navarro"
 description   = "A web template that backend and frontend are seamless connected!"
 license       = "MIT"
@@ -56,7 +56,8 @@ task buildServer, "Builds the server in development mode":
 task buildCss, "Builds Sass and add it to `build/`":
   if existsOrCreateDir binDir / styleDir:
     rmFile binDir / cssFile
-  exec fmt"sass --no-source-map {publicDir / sassFile} {binDir / cssFile}"
+  exec fmt"sass --no-source-map {publicDir / sassFile} {publicDir / cssFile}"
+  cpFile publicDir / cssFile, binDir / cssFile
 
 task setupCssDev, "Symlink compiled CSS from public/ to build/ to allow easy development":
   rmFile binDir / cssFile
@@ -107,6 +108,7 @@ task compileAllRelease, "Builds the JS in background while building server; All 
 
 task r, "Debug build all and run":
   setupFilesTask()
+  buildCssTask()
   setupCssDevTask()
   compileAllTask()
   runServerTask()
@@ -124,3 +126,33 @@ task cleanBuild, "Deletes all files created by setup task":
         rmFile f.path
       else:
         rmDir f.path
+
+from std/os import splitFile, walkDirRec, splitPath
+from std/strutils import multiReplace
+
+task renameProject, "Since this project is a template, this task renames all files to your new name.":
+  let
+    currName = currentSourcePath().splitFile.name
+    newName = commandLineParams()[^1]
+  if newName == "renameProject":
+    echo "Provide the new name"
+    return
+  func pkg(s: string): string {.inline.} =
+    s & "pkg"
+  proc renameFile(filePath: string) =
+    ## Rename file and replaces all the old name imports to new one
+    proc replaceCurrName(s: string): string =
+      s.multiReplace({
+        currName: newName,
+        currName.pkg: newName.pkg
+      })
+    filePath.writeFile filePath.readFile.replaceCurrName
+    let newPath = filePath.replaceCurrName
+    if newPath != filePath:
+      mvFile filePath, newPath
+  mvDir srcDir / currName.pkg, srcDir / newName.pkg
+
+  for f in walkDirRec ".":
+    let ext = f.splitFile.ext
+    if ext.len > 1 and ext[1..^1] in ["nim", "nimble", "nims", "md", ".gitignore", ".env"]:
+      renameFile f

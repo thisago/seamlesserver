@@ -1,5 +1,11 @@
 # Changelog
 
+## Version alpha 0.11.0 (20/09/2023)
+
+- Added auto project renaming
+- Added CSS compilation to `r` Nimble task
+- Removed all uppercase letters in `seamlesserver` to allow renamer task works well
+
 ## Version alpha 0.10.0 (17/09/2023)
 
 - Fixed app name

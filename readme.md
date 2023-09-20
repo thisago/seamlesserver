@@ -1,7 +1,7 @@
 <div align=center>
-<img alt="Seamlesserver Logo" src="images/logo.png" width="200">
+<img alt="seamlesserver Logo" src="images/logo.png" width="200">
 
-# **SEAMLESSERVER**
+# **seamlesserver**
 
 #### A web template that backend and frontend are seamless connected!
 
@@ -81,7 +81,17 @@ The SPA will change the pages without reloading and the state will be preserved,
 
 ## Getting started
 
-To run is extremely simple!
+Before start, rename the whole project with:
+
+```bash
+$ nimble rename_project myFullstackApp
+```
+
+Keep in mind that it'll rename the whole project as many times you want.
+
+---
+
+And to run is extremely simple!
 
 ```bash
 $ nimble r # build and run, for development purposes

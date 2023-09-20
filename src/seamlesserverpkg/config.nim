@@ -31,7 +31,7 @@ when not defined js:
 
       host* = env.getOrDefault("host", "localhost")
       port* = env.getOrDefault("port", 8080)
-      appName* = env.getOrDefault("appName", "Seamlesserver")
+      appName* = env.getOrDefault("appName", "seamlesserver")
 
       settings* = newSettings(
         appName = appName,
