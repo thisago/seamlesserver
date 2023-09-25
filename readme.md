@@ -81,6 +81,14 @@ The SPA will change the pages without reloading and the state will be preserved,
 
 ## Getting started
 
+### Dependencies
+
+```bash
+npm install -g sass
+```
+
+### Setup
+
 Before start, rename the whole project with:
 
 ```bash
@@ -89,7 +97,7 @@ $ nimble rename_project myFullstackApp
 
 Keep in mind that it'll rename the whole project as many times you want.
 
----
+### Running
 
 And to run is extremely simple!
 
