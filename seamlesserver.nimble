@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.11.0"
+version       = "0.11.1"
 author        = "Thiago Navarro"
 description   = "A web template that backend and frontend are seamless connected!"
 license       = "MIT"
@@ -71,7 +71,7 @@ task setupFiles, "Create the missing files in `build/` dir":
     cpFile envFile, binDir / envFile
   if not dirExists binDir / assetsDir:
     echo fmt"Assets dir not exists in '{binDir}' dir, merging public/ to build/."
-    exec fmt"cp -r {publicDir}/* {binDir}"
+    exec "cd " & publicDir & " && ls . | grep -v 'style' | xargs -I {} cp -r {} ../" & binDir
 
 task runServer, "Builds the server in debug and run it!":
   setupFilesTask()

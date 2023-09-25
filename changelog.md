@@ -1,5 +1,9 @@
 # Changelog
 
+## Version alpha 0.11.1 (20/09/2023)
+
+- Renamed `dynamicLink` parameter to disable JS loading from `inSpa` to `useJs`
+
 ## Version alpha 0.11.0 (20/09/2023)
 
 - Added auto project renaming
